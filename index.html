@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#142b45">
+<title>TRAVEL</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--navy:#142b45;--blue:#24496d;--bg:#f3f6fa;--line:#dce4ed;--muted:#65758a;--green:#16835d;--red:#b83c42}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px system-ui,-apple-system,Segoe UI,sans-serif;color:#17283b}
+header{background:var(--navy);color:white;padding:20px 17px 16px;position:sticky;top:0;z-index:2}
+.brand{display:flex;justify-content:space-between;align-items:center}.brand h1{font-size:21px;letter-spacing:1px;margin:0}.brand span{font-size:25px}
+header p{color:#d6e2ef;margin:5px 0 0;font-size:13px}
+main{max-width:760px;margin:auto;padding:15px 13px 90px}
+nav{display:flex;gap:7px;overflow:auto;padding:10px 0 13px;position:sticky;top:78px;background:var(--bg);z-index:1}
+nav button{white-space:nowrap;border:1px solid var(--line);background:white;border-radius:22px;padding:9px 13px;color:var(--navy);font-weight:600}
+nav button.active{background:var(--navy);color:white}
+.card{background:white;border:1px solid var(--line);border-radius:16px;padding:15px;margin:0 0 13px;box-shadow:0 2px 8px #1b36500a}
+h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:0 0 8px}
+label{display:block;font-size:12px;color:var(--muted);font-weight:650;margin:10px 0 5px}
+input,select,textarea{width:100%;border:1px solid #cbd6e2;border-radius:10px;padding:11px;font:inherit;background:white;color:#17283b}
+textarea{min-height:75px;resize:vertical}
+button,.btn{cursor:pointer;font:inherit}
+.primary{background:var(--navy);color:white;border:0;border-radius:11px;padding:11px 14px;font-weight:650}
+.secondary{background:white;color:var(--navy);border:1px solid var(--line);border-radius:11px;padding:10px 13px;font-weight:600}
+.danger{color:var(--red);border-color:#efc9cb}
+.row{display:flex;gap:9px;align-items:center}.row>*{flex:1}.row .fit{flex:0 0 auto}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#edf3f8;border-radius:12px;padding:12px}.stat b{display:block;font-size:22px;color:var(--navy)}
+.muted{color:var(--muted);font-size:13px}.tag{font-size:11px;padding:4px 8px;border-radius:20px;background:#edf3f8;color:var(--blue)}
+.item{padding:11px 0;border-bottom:1px solid #edf0f4}.item:last-child{border:0}
+.itemtop{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.itemtitle{font-weight:650}.smallbtn{border:1px solid var(--line);background:white;border-radius:8px;padding:6px 9px;font-size:12px}
+.hidden{display:none!important}.empty{text-align:center;padding:25px 10px;color:var(--muted)}
+progress{width:100%;height:9px;accent-color:var(--green)}
+.fileline{display:flex;justify-content:space-between;gap:8px;align-items:center}
+footer{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;border-top:1px solid var(--line);padding:10px max(13px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:11px}
+@media(min-width:900px){
+  header{padding:22px max(28px,calc((100vw - 1120px)/2))}
+  main{max-width:1120px;padding:22px 28px 100px}
+  nav{top:76px;padding:13px 0 17px;gap:10px}
+  nav button{padding:10px 18px}
+  .pane:not(.hidden){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+  .pane:not(.hidden)>.card{margin:0}
+  .pane:not(.hidden)>.card:first-child{grid-column:span 2}
+  #home>.card:first-child{grid-column:span 2}
+  #home>.card:nth-child(2),#home>.card:nth-child(3){grid-column:span 1}
+  #trips>.card:first-child,#trips>#tripEditor,#trips>.card:last-child{grid-column:span 1}
+  #docs>.card:first-child,#docs>.card:last-child{grid-column:span 1}
+  #deadlines>.card:first-child{grid-column:span 2}
+  #settings>.card{grid-column:span 1}
+}
+@media(max-width:420px){.grid{grid-template-columns:1fr 1fr}.row.wrap{flex-wrap:wrap}}
+@media print{header,nav,footer,.no-print,button{display:none!important}body{background:white}main{padding:0}.card{box-shadow:none;break-inside:avoid;border:1px solid #bbb}}
+</style>
+</head>
+<body>
+<header><div class="brand"><h1>TRAVEL</h1><span>✈</span></div><p>La tua cartella digitale di viaggio</p></header>
+<main>
+<nav id="tabs">
+<button class="active" data-tab="home">Panoramica</button><button data-tab="trips">I miei viaggi</button><button data-tab="docs">Documenti</button><button data-tab="checklist">Checklist USA</button><button data-tab="deadlines">Scadenze</button><button data-tab="settings">Impostazioni</button>
+</nav>
+<section id="home" class="pane">
+<div class="card"><h2>Benvenuta nella tua cartella viaggi</h2><p class="muted">Organizza viaggi, persone, documenti e scadenze in un unico spazio.</p>
+<div class="grid"><div class="stat"><b id="tripCount">0</b><span class="muted">Viaggi</span></div><div class="stat"><b id="docCount">0</b><span class="muted">Documenti</span></div><div class="stat"><b id="deadlineCount">0</b><span class="muted">Scadenze future</span></div><div class="stat"><b id="peopleCount">0</b><span class="muted">Viaggiatori</span></div></div></div>
+<div class="card"><div class="row"><h2>Viaggio in evidenza</h2><button class="secondary fit no-print" onclick="showTab('trips')">Gestisci</button></div><div id="featured"></div></div>
+<div class="card"><h2>Prossime scadenze</h2><div id="upcoming"></div></div>
+<div class="card"><h2>Accesso rapido</h2><div class="row wrap"><button class="primary" onclick="newTrip()">＋ Nuovo viaggio</button><button class="secondary" onclick="showTab('docs')">＋ Carica documento</button></div></div>
+</section>
+<section id="trips" class="pane hidden">
+<div class="card"><div class="row"><h2>I miei viaggi</h2><button class="primary fit" onclick="newTrip()">＋ Nuovo</button></div><div id="tripList"></div></div>
+<div class="card hidden" id="tripEditor"><h2 id="tripFormTitle">Nuovo viaggio</h2><input type="hidden" id="tripId">
+<label>Nome viaggio</label><input id="tripName" placeholder="Es. America 2026">
+<div class="row"><div><label>Destinazione</label><input id="tripDestination" placeholder="Es. Las Vegas, San Francisco"></div><div><label>Paese</label><input id="tripCountry" value="Stati Uniti"></div></div>
+<div class="row"><div><label>Partenza</label><input type="date" id="tripStart"></div><div><label>Rientro</label><input type="date" id="tripEnd"></div></div>
+<label>Note e dettagli</label><textarea id="tripNotes" placeholder="Voli, prenotazioni, indirizzi..."></textarea>
+<div class="row"><button class="primary" onclick="saveTrip()">Salva viaggio</button><button class="secondary" onclick="cancelTripEdit()">Annulla</button></div></div>
+<div class="card"><h2>Viaggiatori</h2><p class="muted">Aggiungi le persone che partecipano ai viaggi. Ogni documento potrà essere associato a un viaggiatore.</p>
+<label>Nome e cognome</label><input id="personName" placeholder="Nome viaggiatore">
+<button class="secondary" onclick="addPerson()">＋ Aggiungi persona</button><div id="peopleList"></div></div>
+</section>
+<section id="docs" class="pane hidden">
+<div class="card"><h2>Carica e archivia documenti</h2><p class="muted">PDF, JPG, PNG e altre immagini. I file restano associati al viaggio selezionato.</p>
+<label>Viaggio</label><select id="docTrip"></select>
+<label>Viaggiatore</label><select id="docPerson"><option value="">Non specificato</option></select>
+<label>Categoria documento</label><select id="docCategory"><option>Passaporto</option><option>ESTA / visto</option><option>Volo / carta d'imbarco</option><option>Hotel / alloggio</option><option>Assicurazione</option><option>Patente</option><option>Sanitario</option><option>Altro</option></select>
+<label>Nome documento</label><input id="docName" placeholder="Es. Passaporto - Mario Rossi">
+<label>File PDF o foto</label><input type="file" id="docFile" accept=".pdf,image/*" multiple>
+<label>Data di scadenza (facoltativa)</label><input type="date" id="docExpiry">
+<button class="primary" style="width:100%;margin-top:12px" onclick="addDocuments()">Carica documento/i</button><p id="uploadStatus" class="muted"></p></div>
+<div class="card"><div class="row"><h2>Archivio documenti</h2><button class="secondary fit no-print" onclick="window.print()">Stampa / PDF</button></div>
+<label>Filtra per viaggio</label><select id="filterTrip" onchange="renderDocs()"></select><label>Cerca nell’archivio</label><input id="docSearch" placeholder="Cerca nome, categoria o viaggiatore" oninput="renderDocs()"><div id="docList"></div></div>
+</section>
+<section id="checklist" class="pane hidden">
+<div class="card"><h2>Preparazione viaggio negli Stati Uniti</h2><p class="muted">Controlla i requisiti per ogni persona. La lista è una guida organizzativa: i requisiti effettivi dipendono da cittadinanza, tipo di passaporto, motivo e durata del viaggio. Verifica sempre le regole ufficiali prima della partenza.</p>
+<label>Viaggio</label><select id="checkTrip" onchange="renderChecklist()"></select>
+<label>Viaggiatore</label><select id="checkPerson" onchange="renderChecklist()"></select>
+<div id="checkProgress" class="muted" style="margin:12px 0 7px"></div><progress id="checkBar" value="0" max="100"></progress>
+<div id="checkItems"></div>
+<div class="row wrap no-print" style="margin-top:12px"><button class="secondary" onclick="resetChecklist()">Azzera checklist persona</button><button class="secondary" onclick="window.print()">Stampa checklist</button></div>
+</div>
+<div class="card"><h2>Requisiti e link ufficiali</h2>
+<div class="item"><b>ESTA – sito ufficiale CBP</b><p class="muted">Domanda e controllo dello stato dell'autorizzazione.</p><a href="https://esta.cbp.dhs.gov/" target="_blank" rel="noopener">Apri ESTA ufficiale ↗</a></div>
+<div class="item"><b>Visa Waiver Program – Dipartimento di Stato USA</b><p class="muted">Requisiti di ammissibilità, passaporto e condizioni del programma.</p><a href="https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visa-waiver-program.html" target="_blank" rel="noopener">Consulta i requisiti ↗</a></div>
+<div class="item"><b>Viaggiare Sicuri – Farnesina</b><p class="muted">Scheda Paese Stati Uniti e aggiornamenti per i viaggiatori italiani.</p><a href="https://www.viaggiaresicuri.it/find-country/country/USA" target="_blank" rel="noopener">Apri la scheda USA ↗</a></div>
+<p class="muted">Nota: l'approvazione ESTA consente di chiedere l'imbarco nell'ambito del VWP, ma non garantisce l'ammissione negli Stati Uniti. L'ultima decisione spetta alle autorità di frontiera.</p>
+</div>
+</section>
+<section id="deadlines" class="pane hidden">
+<div class="card"><h2>Scadenze e promemoria</h2><p class="muted">Registra scadenze di documenti, assicurazioni, prenotazioni e check-in.</p>
+<label>Viaggio</label><select id="deadlineTrip"></select>
+<label>Descrizione</label><input id="deadlineTitle" placeholder="Es. Scadenza ESTA">
+<div class="row"><div><label>Data</label><input type="date" id="deadlineDate"></div><div><label>Avvisami (giorni prima)</label><select id="deadlineLead"><option value="1">1 giorno</option><option value="7" selected>7 giorni</option><option value="14">14 giorni</option><option value="30">30 giorni</option><option value="60">60 giorni</option><option value="90">90 giorni</option></select></div></div>
+<button class="primary" onclick="addDeadline()">Aggiungi scadenza</button><button class="secondary" onclick="enableNotifications()">Attiva notifiche</button><div id="deadlineList"></div></div>
+</section>
+<section id="settings" class="pane hidden">
+<div class="card"><h2>Backup e ripristino</h2><p class="muted">Esporta i dati dell'app in un file JSON. Il backup completo include anche i PDF e le foto archiviati, se il browser consente di leggerli. Conserva il file esportato in un luogo sicuro.</p>
+<button class="primary" onclick="exportBackup()">Esporta backup dati</button><label>Ripristina backup JSON</label><input type="file" id="restoreFile" accept="application/json"><button class="secondary" onclick="restoreBackup()">Ripristina</button></div>
+<div class="card"><h2>Consultazione offline</h2><p class="muted">Dopo aver installato l'app e aperto i documenti sul dispositivo, potrai consultare l'interfaccia senza connessione. Conserva anche copie importanti in un archivio sicuro separato.</p><button class="secondary" onclick="installInfo()">Come installare sul telefono</button></div>
+<div class="card"><h2>Cloud e privacy</h2><p class="muted">Questa versione salva i dati localmente nel browser. La sincronizzazione cloud multi-dispositivo richiede un servizio backend e un account configurato: non è attiva in questa build. Non inserire password, numeri completi di carte o dati non necessari.</p></div>
+<div class="card"><h2>Stampa</h2><p class="muted">Usa la funzione stampa nelle sezioni Viaggi e Documenti e scegli “Salva come PDF”.</p><button class="secondary" onclick="window.print()">Stampa questa schermata</button></div>
+</section>
+</main>
+<footer>TRAVEL · Archivio personale di viaggio · Versione 3 · archivio locale</footer>
+<script>
+const DB='usaTravel_v1', FILEDB='usaTravelFiles_v1';
+let data={trips:[],people:[],docs:[],deadlines:[],checklists:{}};
+let fileDb;
+function load(){try{data=JSON.parse(localStorage.getItem(DB))||data}catch(e){};data.checklists=data.checklists||{};renderAll()}
+function save(){localStorage.setItem(DB,JSON.stringify(data));renderAll()}
+function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function showTab(t){document.querySelectorAll('.pane').forEach(x=>x.classList.add('hidden'));document.getElementById(t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));renderAll()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+function openFileDb(){return new Promise((resolve,reject)=>{let r=indexedDB.open(FILEDB,1);r.onupgradeneeded=()=>r.result.createObjectStore('files',{keyPath:'id'});r.onsuccess=()=>{fileDb=r.result;resolve(fileDb)};r.onerror=()=>reject(r.error)})}
+function putFile(obj){return new Promise((res,rej)=>{let tx=fileDb.transaction('files','readwrite');tx.objectStore('files').put(obj);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
+function getFile(fid){return new Promise((res,rej)=>{let r=fileDb.transaction('files').objectStore('files').get(fid);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+function deleteFile(fid){return new Promise(res=>{let tx=fileDb.transaction('files','readwrite');tx.objectStore('files').delete(fid);tx.oncomplete=()=>res()})}
+function newTrip(){document.getElementById('tripEditor').classList.remove('hidden');document.getElementById('tripFormTitle').textContent='Nuovo viaggio';['tripId','tripName','tripDestination','tripNotes'].forEach(x=>document.getElementById(x).value='');document.getElementById('tripCountry').value='Stati Uniti';document.getElementById('tripStart').value='';document.getElementById('tripEnd').value='';}
+function cancelTripEdit(){document.getElementById('tripEditor').classList.add('hidden')}
+function editTrip(tid){let t=data.trips.find(x=>x.id===tid);if(!t)return;newTrip();document.getElementById('tripFormTitle').textContent='Modifica viaggio';document.getElementById('tripId').value=t.id;document.getElementById('tripName').value=t.name;document.getElementById('tripDestination').value=t.destination;document.getElementById('tripCountry').value=t.country;document.getElementById('tripStart').value=t.start||'';document.getElementById('tripEnd').value=t.end||'';document.getElementById('tripNotes').value=t.notes||'';window.scrollTo(0,0)}
+function saveTrip(){let name=document.getElementById('tripName').value.trim();if(!name)return alert('Inserisci il nome del viaggio');let tid=document.getElementById('tripId').value;let t={id:tid||id(),name,destination:document.getElementById('tripDestination').value,country:document.getElementById('tripCountry').value,start:document.getElementById('tripStart').value,end:document.getElementById('tripEnd').value,notes:document.getElementById('tripNotes').value};if(tid)data.trips=data.trips.map(x=>x.id===tid?t:x);else data.trips.push(t);cancelTripEdit();save()}
+function deleteTrip(tid){if(!confirm('Eliminare il viaggio? I documenti e le scadenze associati saranno rimossi.'))return;let docs=data.docs.filter(d=>d.tripId===tid);docs.forEach(d=>deleteFile(d.fileId));data.docs=data.docs.filter(d=>d.tripId!==tid);data.deadlines=data.deadlines.filter(d=>d.tripId!==tid);data.trips=data.trips.filter(t=>t.id!==tid);save()}
+function addPerson(){let n=document.getElementById('personName').value.trim();if(!n)return;data.people.push({id:id(),name:n});document.getElementById('personName').value='';save()}
+function removePerson(pid){data.people=data.people.filter(p=>p.id!==pid);save()}
+async function addDocuments(){let files=[...document.getElementById('docFile').files];if(!files.length)return alert('Seleziona almeno un file');let tripId=document.getElementById('docTrip').value;if(!tripId)return alert('Crea prima un viaggio');let status=document.getElementById('uploadStatus');status.textContent='Caricamento…';for(let f of files){let fid=id();await putFile({id:fid,name:f.name,type:f.type,blob:f,size:f.size});data.docs.push({id:id(),fileId:fid,tripId,personId:document.getElementById('docPerson').value,category:document.getElementById('docCategory').value,name:document.getElementById('docName').value.trim()||f.name,filename:f.name,expiry:document.getElementById('docExpiry').value,added:new Date().toISOString()})}document.getElementById('docFile').value='';status.textContent=files.length+' file archiviati sul dispositivo.';save()}
+async function openDoc(fid){let f=await getFile(fid);if(!f)return alert('File non trovato nel dispositivo');let url=URL.createObjectURL(f.blob);let a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000)}
+function editDoc(did){let d=data.docs.find(x=>x.id===did);if(!d)return;let name=prompt('Nome documento:',d.name);if(name===null)return;let expiry=prompt('Data di scadenza (AAAA-MM-GG, lascia vuoto se non prevista):',d.expiry||'');if(expiry===null)return;let category=prompt('Categoria documento:',d.category);if(category===null)return;d.name=name.trim()||d.filename;d.expiry=expiry.trim();d.category=category.trim()||'Altro';save()}
+async function removeDoc(did){if(!confirm('Eliminare questo documento?'))return;let d=data.docs.find(x=>x.id===did);if(d)await deleteFile(d.fileId);data.docs=data.docs.filter(x=>x.id!==did);save()}
+function addDeadline(){let title=document.getElementById('deadlineTitle').value.trim(),date=document.getElementById('deadlineDate').value;if(!title||!date)return alert('Inserisci descrizione e data');data.deadlines.push({id:id(),tripId:document.getElementById('deadlineTrip').value,title,date,lead:+document.getElementById('deadlineLead').value,done:false});document.getElementById('deadlineTitle').value='';save()}
+function toggleDeadline(did){let d=data.deadlines.find(x=>x.id===did);d.done=!d.done;save()}
+function removeDeadline(did){data.deadlines=data.deadlines.filter(x=>x.id!==did);save()}
+function fmt(s){return s?new Date(s+'T12:00:00').toLocaleDateString('it-IT'):'—'}
+function tripName(tid){return data.trips.find(t=>t.id===tid)?.name||'Viaggio non specificato'}
+function renderAll(){renderHome();renderTrips();renderPeople();renderSelects();renderDocs();renderDeadlines();renderChecklistSelects();renderChecklist()}
+function renderHome(){document.getElementById('tripCount').textContent=data.trips.length;document.getElementById('docCount').textContent=data.docs.length;document.getElementById('deadlineCount').textContent=data.deadlines.filter(d=>!d.done&&d.date>=new Date().toISOString().slice(0,10)).length;document.getElementById('peopleCount').textContent=data.people.length;let f=document.getElementById('featured');let t=[...data.trips].sort((a,b)=>(a.start||'').localeCompare(b.start||''))[0];f.innerHTML=t?`<h3>${esc(t.name)}</h3><p class="muted">${esc(t.destination||'')} · ${fmt(t.start)} – ${fmt(t.end)}</p><p>${esc(t.notes||'')}</p>`:'<div class="empty">Nessun viaggio ancora. Crea il tuo primo viaggio.</div>';let ds=data.deadlines.filter(d=>!d.done).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);document.getElementById('upcoming').innerHTML=ds.length?ds.map(d=>`<div class="item"><b>${esc(d.title)}</b><div class="muted">${fmt(d.date)} · ${esc(tripName(d.tripId))}</div></div>`).join(''):'<p class="muted">Nessuna scadenza registrata.</p>'}
+function renderTrips(){document.getElementById('tripList').innerHTML=data.trips.length?data.trips.map(t=>`<div class="item"><div class="itemtop"><div><div class="itemtitle">${esc(t.name)}</div><div class="muted">${esc(t.destination||'')} · ${fmt(t.start)} – ${fmt(t.end)}</div></div><div><button class="smallbtn" onclick="editTrip('${t.id}')">Modifica</button> <button class="smallbtn" onclick="deleteTrip('${t.id}')">Elimina</button></div></div></div>`).join(''):'<div class="empty">Non hai ancora creato viaggi.</div>'}
+function renderPeople(){document.getElementById('peopleList').innerHTML=data.people.map(p=>`<div class="item itemtop"><span>${esc(p.name)}</span><button class="smallbtn" onclick="removePerson('${p.id}')">Rimuovi</button></div>`).join('')}
+function fillSelect(el,items,placeholder){let old=el.value;el.innerHTML=(placeholder?`<option value="">${placeholder}</option>`:'')+items.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');if(items.some(x=>x.id===old))el.value=old}
+function renderSelects(){['docTrip','filterTrip','deadlineTrip'].forEach(id=>fillSelect(document.getElementById(id),data.trips,id==='filterTrip'?'Tutti i viaggi':'Seleziona viaggio'));let p=document.getElementById('docPerson'),old=p.value;p.innerHTML='<option value="">Non specificato</option>'+data.people.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');if(data.people.some(x=>x.id===old))p.value=old}
+function renderDocs(){let filter=document.getElementById('filterTrip').value;let q=(document.getElementById('docSearch')?.value||'').trim().toLowerCase();let docs=data.docs.filter(d=>(!filter||d.tripId===filter)&&(!q||[d.name,d.category,d.filename,data.people.find(p=>p.id===d.personId)?.name].join(' ').toLowerCase().includes(q)));document.getElementById('docList').innerHTML=docs.length?docs.map(d=>`<div class="item"><div class="itemtop"><div><div class="itemtitle">${esc(d.name)}</div><div class="muted">${esc(d.category)} · ${esc(tripName(d.tripId))}${d.expiry?' · Scade: '+fmt(d.expiry):''}</div><div class="muted">${esc(data.people.find(p=>p.id===d.personId)?.name||'')} · ${esc(d.filename||'')}</div></div><div><button class="smallbtn" onclick="openDoc('${d.fileId}')">Apri</button> <button class="smallbtn" onclick="editDoc('${d.id}')">Modifica</button> <button class="smallbtn" onclick="removeDoc('${d.id}')">✕</button></div></div></div>`).join(''):'<div class="empty">Nessun documento trovato.</div>'}
+const checklistTasks=[
+{id:'passport',group:'Documenti di viaggio',title:'Passaporto individuale valido',detail:'Controlla i dati e la data di scadenza. Ogni viaggiatore, anche minorenne, deve avere il proprio passaporto.'},
+{id:'epassport',group:'Documenti di viaggio',title:'Passaporto elettronico (se si usa il Visa Waiver Program)',detail:'Verifica la presenza del chip elettronico e l’idoneità del documento per il VWP.'},
+{id:'esta',group:'Autorizzazioni',title:'ESTA approvata oppure visto valido',detail:'Se si viaggia con il VWP, ogni persona deve avere una propria ESTA approvata prima dell’imbarco. Se non si è idonei al VWP, verificare il visto appropriato.'},
+{id:'eligibility',group:'Autorizzazioni',title:'Verificata l’idoneità al Visa Waiver Program',detail:'Controlla cittadinanza, motivo e durata del viaggio, precedenti viaggi/condizioni che possono incidere sull’idoneità. In caso di dubbio, consulta le autorità consolari.'},
+{id:'return',group:'Viaggio',title:'Biglietto di ritorno o proseguimento',detail:'Conserva la conferma del volo di uscita dagli Stati Uniti.'},
+{id:'stay',group:'Viaggio',title:'Indirizzo del primo alloggio e contatti',detail:'Annota indirizzo, telefono e conferma della prenotazione o ospitalità.'},
+{id:'insurance',group:'Da valutare',title:'Assicurazione sanitaria e di viaggio',detail:'Non sostituisce i documenti di ingresso; valuta coperture mediche, assistenza e imprevisti.'},
+{id:'meds',group:'Da valutare',title:'Farmaci e documentazione sanitaria',detail:'Verifica le regole USA per i medicinali che porti e conserva confezioni e prescrizioni quando pertinenti.'},
+{id:'copies',group:'Organizzazione',title:'Copie digitali e cartacee dei documenti',detail:'Conserva copie separate dagli originali e assicurati di poterle consultare offline.'},
+{id:'airline',group:'Organizzazione',title:'Controllate le regole della compagnia aerea',detail:'Verifica bagaglio, check-in, documenti richiesti e tempi di presentazione in aeroporto.'}
+];
+function checklistKey(){return document.getElementById('checkTrip').value+'_'+document.getElementById('checkPerson').value}
+function renderChecklistSelects(){let t=document.getElementById('checkTrip'),p=document.getElementById('checkPerson');if(!t||!p)return;let oldT=t.value,oldP=p.value;t.innerHTML='<option value="">Seleziona viaggio</option>'+data.trips.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');if(data.trips.some(x=>x.id===oldT))t.value=oldT;p.innerHTML='<option value="">Seleziona viaggiatore</option>'+data.people.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');if(data.people.some(x=>x.id===oldP))p.value=oldP}
+function renderChecklist(){let box=document.getElementById('checkItems');if(!box)return;let tid=document.getElementById('checkTrip').value,pid=document.getElementById('checkPerson').value;if(!tid||!pid){box.innerHTML='<div class="empty">Seleziona un viaggio e un viaggiatore per visualizzare la checklist.</div>';document.getElementById('checkProgress').textContent='';document.getElementById('checkBar').value=0;return}let key=checklistKey();data.checklists[key]=data.checklists[key]||{};let done=checklistTasks.filter(x=>data.checklists[key][x.id]).length;document.getElementById('checkProgress').textContent=`${done} di ${checklistTasks.length} attività completate`;document.getElementById('checkBar').value=done/checklistTasks.length*100;let groups=[...new Set(checklistTasks.map(x=>x.group))];box.innerHTML=groups.map(g=>`<h3 style="margin-top:17px">${esc(g)}</h3>`+checklistTasks.filter(x=>x.group===g).map(x=>`<div class="item"><label style="display:flex;gap:9px;align-items:flex-start;color:#17283b;font-size:14px"><input type="checkbox" style="width:auto;margin-top:3px" ${data.checklists[key][x.id]?'checked':''} onchange="setChecklist('${x.id}',this.checked)"><span><b>${esc(x.title)}</b><span class="muted" style="display:block;font-weight:400">${esc(x.detail)}</span></span></label></div>`).join('')).join('')}
+function setChecklist(taskId,checked){let key=checklistKey();if(!key||key.startsWith('_'))return;data.checklists[key]=data.checklists[key]||{};data.checklists[key][taskId]=checked;save()}
+function resetChecklist(){let tid=document.getElementById('checkTrip').value,pid=document.getElementById('checkPerson').value;if(!tid||!pid)return alert('Seleziona viaggio e viaggiatore');if(!confirm('Azzero tutte le spunte per questa persona e questo viaggio?'))return;delete data.checklists[checklistKey()];save()}
+function renderDeadlines(){let ds=[...data.deadlines].sort((a,b)=>a.date.localeCompare(b.date));document.getElementById('deadlineList').innerHTML=ds.length?ds.map(d=>`<div class="item"><div class="itemtop"><div><div class="itemtitle">${esc(d.title)} ${d.done?'<span class="tag">Completata</span>':''}</div><div class="muted">${fmt(d.date)} · ${esc(tripName(d.tripId))} · Avviso ${d.lead} gg prima</div></div><div><button class="smallbtn" onclick="toggleDeadline('${d.id}')">${d.done?'Riapri':'Fatto'}</button> <button class="smallbtn" onclick="removeDeadline('${d.id}')">✕</button></div></div></div>`).join(''):'<div class="empty">Nessuna scadenza registrata.</div>'}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function enableNotifications(){if(!('Notification'in window))return alert('Le notifiche non sono supportate da questo browser');let p=await Notification.requestPermission();if(p==='granted'){checkReminders();alert('Notifiche abilitate. I promemoria vengono controllati quando apri l’app.');}else alert('Permesso notifiche non concesso.')}
+function checkReminders(){if(!('Notification'in window)||Notification.permission!=='granted')return;let today=new Date();today.setHours(0,0,0,0);data.deadlines.filter(d=>!d.done).forEach(d=>{let date=new Date(d.date+'T00:00:00');let days=Math.round((date-today)/86400000);if(days===d.lead||days===0)new Notification('TRAVEL · Promemoria',{body:d.title+(days===0?' · Oggi':' · Tra '+days+' giorni')})})}
+async function blobToDataUrl(blob){return await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.readAsDataURL(blob)})}
+function dataUrlToBlob(dataUrl){let [meta,b64]=dataUrl.split(',');let mime=(meta.match(/data:(.*?);base64/)||[])[1]||'application/octet-stream';let raw=atob(b64),arr=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)arr[i]=raw.charCodeAt(i);return new Blob([arr],{type:mime})}
+async function exportBackup(){try{let files=[];for(let d of data.docs){let f=await getFile(d.fileId);if(f?.blob)files.push({id:d.fileId,name:f.name,type:f.type,size:f.size,data:await blobToDataUrl(f.blob)})}let backup={format:'TRAVEL_BACKUP_V3',exportedAt:new Date().toISOString(),data,files};let blob=new Blob([JSON.stringify(backup)],{type:'application/json'});download(blob,'travel-backup-completo.json')}catch(e){alert('Non è stato possibile creare il backup completo. Verifica lo spazio disponibile nel dispositivo.')}}
+async function restoreBackup(){let f=document.getElementById('restoreFile').files[0];if(!f)return alert('Seleziona un backup');let r=new FileReader();r.onload=async()=>{try{let x=JSON.parse(r.result),payload=x.data||x;if(!payload.trips||!payload.docs||!payload.deadlines)throw 0;if(!confirm('Sostituire i dati attuali con il backup?'))return;for(let item of (x.files||[])){await putFile({id:item.id,name:item.name,type:item.type,blob:dataUrlToBlob(item.data),size:item.size})}data=payload;data.checklists=data.checklists||{};save();alert('Backup ripristinato. Se il backup conteneva allegati, sono stati ripristinati anche i file.')}catch(e){alert('File di backup non valido oppure spazio insufficiente nel dispositivo.')}};r.readAsText(f)}
+function download(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)}
+function installInfo(){alert('Apri questa app dal browser del telefono, poi usa il menu del browser e scegli “Aggiungi a schermata Home” o “Installa app”. Per installazione offline completa, pubblica i file su un sito HTTPS.')}
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+openFileDb().then(load).then(checkReminders).catch(()=>load());
+</script>
+</body></html>
