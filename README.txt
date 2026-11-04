@@ -19,3 +19,4 @@ UTILIZZO
 
 CHECKLIST USA
 È un promemoria organizzativo, non una valutazione legale dell’idoneità all’ingresso. I requisiti dipendono da cittadinanza, passaporto, precedenti viaggi, motivo e durata del soggiorno. Verificare sempre le fonti ufficiali aggiornate. L’ESTA non è un visto e non garantisce l’ammissione alla frontiera.
+aggiornamento Travel 
