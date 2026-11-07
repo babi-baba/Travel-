@@ -58,6 +58,16 @@ footer{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;border-top:1p
 <body>
 <header><div class="brand"><h1>TRAVEL</h1><span>✈</span></div><p>La tua cartella digitale di viaggio</p></header>
 <main>
+<div class="card no-print" id="cloudAuth" style="margin-bottom:14px">
+ <h2>Account TRAVEL e sincronizzazione</h2>
+ <p class="muted" id="cloudStatus">Non collegata. Accedi per sincronizzare viaggi e documenti tra i tuoi dispositivi.</p>
+ <div id="authFields">
+  <label>Email</label><input type="email" id="authEmail" autocomplete="email" placeholder="La tua email">
+  <label>Password</label><input type="password" id="authPassword" autocomplete="current-password" placeholder="Almeno 8 caratteri">
+  <div class="row wrap"><button class="primary" onclick="signIn()">Accedi</button><button class="secondary" onclick="signUp()">Crea account</button></div>
+ </div>
+ <div id="authSigned" class="hidden"><div class="row wrap"><button class="primary" onclick="syncCloud(true)">Sincronizza adesso</button><button class="secondary" onclick="signOut()">Esci</button></div></div>
+</div>
 <nav id="tabs">
 <button class="active" data-tab="home">Panoramica</button><button data-tab="trips">I miei viaggi</button><button data-tab="docs">Documenti</button><button data-tab="checklist">Checklist USA</button><button data-tab="deadlines">Scadenze</button><button data-tab="settings">Impostazioni</button>
 </nav>
@@ -123,12 +133,17 @@ footer{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;border-top:1p
 </section>
 </main>
 <footer>TRAVEL · Archivio personale di viaggio · Versione 3 · archivio locale</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL='https://rhocfrmzwzpihpvmayny.supabase.co';
+const SUPABASE_KEY='sb_publishable_Pu_9vCtdFPYikDTVAAOQNg_HFzIDUCT';
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let cloudUser=null, cloudBusy=false, cloudTimer=null;
 const DB='usaTravel_v1', FILEDB='usaTravelFiles_v1';
 let data={trips:[],people:[],docs:[],deadlines:[],checklists:{}};
 let fileDb;
 function load(){try{data=JSON.parse(localStorage.getItem(DB))||data}catch(e){};data.checklists=data.checklists||{};renderAll()}
-function save(){localStorage.setItem(DB,JSON.stringify(data));renderAll()}
+function save(){localStorage.setItem(DB,JSON.stringify(data));renderAll();if(cloudUser){clearTimeout(cloudTimer);cloudTimer=setTimeout(()=>syncCloud(false),1200)}}
 function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function showTab(t){document.querySelectorAll('.pane').forEach(x=>x.classList.add('hidden'));document.getElementById(t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));renderAll()}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
@@ -143,7 +158,7 @@ function saveTrip(){let name=document.getElementById('tripName').value.trim();if
 function deleteTrip(tid){if(!confirm('Eliminare il viaggio? I documenti e le scadenze associati saranno rimossi.'))return;let docs=data.docs.filter(d=>d.tripId===tid);docs.forEach(d=>deleteFile(d.fileId));data.docs=data.docs.filter(d=>d.tripId!==tid);data.deadlines=data.deadlines.filter(d=>d.tripId!==tid);data.trips=data.trips.filter(t=>t.id!==tid);save()}
 function addPerson(){let n=document.getElementById('personName').value.trim();if(!n)return;data.people.push({id:id(),name:n});document.getElementById('personName').value='';save()}
 function removePerson(pid){data.people=data.people.filter(p=>p.id!==pid);save()}
-async function addDocuments(){let files=[...document.getElementById('docFile').files];if(!files.length)return alert('Seleziona almeno un file');let tripId=document.getElementById('docTrip').value;if(!tripId)return alert('Crea prima un viaggio');let status=document.getElementById('uploadStatus');status.textContent='Caricamento…';for(let f of files){let fid=id();await putFile({id:fid,name:f.name,type:f.type,blob:f,size:f.size});data.docs.push({id:id(),fileId:fid,tripId,personId:document.getElementById('docPerson').value,category:document.getElementById('docCategory').value,name:document.getElementById('docName').value.trim()||f.name,filename:f.name,expiry:document.getElementById('docExpiry').value,added:new Date().toISOString()})}document.getElementById('docFile').value='';status.textContent=files.length+' file archiviati sul dispositivo.';save()}
+async function addDocuments(){let files=[...document.getElementById('docFile').files];if(!files.length)return alert('Seleziona almeno un file');let tripId=document.getElementById('docTrip').value;if(!tripId)return alert('Crea prima un viaggio');let status=document.getElementById('uploadStatus');status.textContent='Caricamento…';for(let f of files){let fid=id();await putFile({id:fid,name:f.name,type:f.type,blob:f,size:f.size});data.docs.push({id:id(),fileId:fid,tripId,personId:document.getElementById('docPerson').value,category:document.getElementById('docCategory').value,name:document.getElementById('docName').value.trim()||f.name,filename:f.name,expiry:document.getElementById('docExpiry').value,added:new Date().toISOString()})}document.getElementById('docFile').value='';status.textContent=files.length+' file archiviati sul dispositivo.';save();if(cloudUser)await syncCloud(false)}
 async function openDoc(fid){let f=await getFile(fid);if(!f)return alert('File non trovato nel dispositivo');let url=URL.createObjectURL(f.blob);let a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000)}
 function editDoc(did){let d=data.docs.find(x=>x.id===did);if(!d)return;let name=prompt('Nome documento:',d.name);if(name===null)return;let expiry=prompt('Data di scadenza (AAAA-MM-GG, lascia vuoto se non prevista):',d.expiry||'');if(expiry===null)return;let category=prompt('Categoria documento:',d.category);if(category===null)return;d.name=name.trim()||d.filename;d.expiry=expiry.trim();d.category=category.trim()||'Altro';save()}
 async function removeDoc(did){if(!confirm('Eliminare questo documento?'))return;let d=data.docs.find(x=>x.id===did);if(d)await deleteFile(d.fileId);data.docs=data.docs.filter(x=>x.id!==did);save()}
@@ -186,7 +201,20 @@ async function exportBackup(){try{let files=[];for(let d of data.docs){let f=awa
 async function restoreBackup(){let f=document.getElementById('restoreFile').files[0];if(!f)return alert('Seleziona un backup');let r=new FileReader();r.onload=async()=>{try{let x=JSON.parse(r.result),payload=x.data||x;if(!payload.trips||!payload.docs||!payload.deadlines)throw 0;if(!confirm('Sostituire i dati attuali con il backup?'))return;for(let item of (x.files||[])){await putFile({id:item.id,name:item.name,type:item.type,blob:dataUrlToBlob(item.data),size:item.size})}data=payload;data.checklists=data.checklists||{};save();alert('Backup ripristinato. Se il backup conteneva allegati, sono stati ripristinati anche i file.')}catch(e){alert('File di backup non valido oppure spazio insufficiente nel dispositivo.')}};r.readAsText(f)}
 function download(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000)}
 function installInfo(){alert('Apri questa app dal browser del telefono, poi usa il menu del browser e scegli “Aggiungi a schermata Home” o “Installa app”. Per installazione offline completa, pubblica i file su un sito HTTPS.')}
+async function updateCloudUI(message){let st=document.getElementById('cloudStatus');if(message)st.textContent=message;document.getElementById('authFields').classList.toggle('hidden',!!cloudUser);document.getElementById('authSigned').classList.toggle('hidden',!cloudUser)}
+async function signUp(){let email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;if(!email||password.length<8)return alert('Inserisci email e password di almeno 8 caratteri.');let {data:res,error}=await supabaseClient.auth.signUp({email,password});if(error)return alert('Registrazione non riuscita: '+error.message);if(res.session){cloudUser=res.user;await afterLogin()}else alert('Account creato. Controlla la tua email e conferma la registrazione, poi accedi.')}
+async function signIn(){let email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;if(!email||!password)return alert('Inserisci email e password.');let {data:res,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)return alert('Accesso non riuscito: '+error.message);cloudUser=res.user;await afterLogin()}
+async function signOut(){await supabaseClient.auth.signOut();cloudUser=null;await updateCloudUI('Sei uscita. I dati locali restano su questo dispositivo.')}
+async function afterLogin(){await updateCloudUI('Accesso effettuato: '+cloudUser.email+'. Controllo i dati cloud…');let {data:remote,error}=await supabaseClient.from('travel_data').select('payload').eq('user_id',cloudUser.id).maybeSingle();if(error){await updateCloudUI('Accesso effettuato, ma lettura cloud non riuscita: '+error.message);return}
+ let localRaw=localStorage.getItem(DB),localHas=false;try{let l=JSON.parse(localRaw||'{}');localHas=(l.trips||[]).length+(l.people||[]).length+(l.docs||[]).length+(l.deadlines||[]).length>0}catch(e){}
+ if(remote&&remote.payload){if(localHas&&!confirm('Esistono dati locali su questo dispositivo e dati nel cloud. Vuoi caricare i dati cloud su questo dispositivo? I dati locali attuali saranno sostituiti. Per sicurezza esporta prima un backup se ti servono.')){await updateCloudUI('Accesso effettuato. Dati locali mantenuti; premi “Sincronizza adesso” solo dopo aver scelto come procedere.');return}data=remote.payload;data.checklists=data.checklists||{};localStorage.setItem(DB,JSON.stringify(data));await restoreCloudFiles();renderAll();await updateCloudUI('Dati caricati dal cloud. Sincronizzazione attiva.')}
+ else {if(localHas){if(confirm('Non ci sono ancora dati cloud. Vuoi caricare nel cloud i dati e i documenti presenti su questo dispositivo?'))await syncCloud(true);else await updateCloudUI('Cloud vuoto. I dati locali sono conservati su questo dispositivo.')}else await updateCloudUI('Account collegato. Puoi iniziare a creare viaggi: verranno sincronizzati.')}
+}
+async function restoreCloudFiles(){for(const d of data.docs||[]){if(!d.storagePath)continue;let {data:blob,error}=await supabaseClient.storage.from('travel-documents').download(d.storagePath);if(!error&&blob)await putFile({id:d.fileId,name:d.filename||d.name,type:blob.type,blob,size:blob.size})}}
+async function syncCloud(manual){if(!cloudUser||cloudBusy)return;cloudBusy=true;await updateCloudUI('Sincronizzazione in corso…');try{for(const d of data.docs||[]){if(d.storagePath)continue;let f=await getFile(d.fileId);if(!f?.blob)continue;let path=cloudUser.id+'/'+d.fileId+'/'+(d.filename||f.name||'document');let {error}=await supabaseClient.storage.from('travel-documents').upload(path,f.blob,{contentType:f.type||'application/octet-stream',upsert:true});if(error)throw error;d.storagePath=path}
+ let {error}=await supabaseClient.from('travel_data').upsert({user_id:cloudUser.id,payload:data,updated_at:new Date().toISOString()},{onConflict:'user_id'});if(error)throw error;localStorage.setItem(DB,JSON.stringify(data));await updateCloudUI('Sincronizzazione completata · '+new Date().toLocaleTimeString('it-IT'));}catch(e){await updateCloudUI('Errore di sincronizzazione: '+(e.message||e));if(manual)alert('Sincronizzazione non completata: '+(e.message||e))}finally{cloudBusy=false}}
+supabaseClient.auth.onAuthStateChange(async(event,session)=>{if(event==='SIGNED_OUT'){cloudUser=null;updateCloudUI('Sei uscita. I dati locali restano su questo dispositivo.')}});
 if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
-openFileDb().then(load).then(checkReminders).catch(()=>load());
+openFileDb().then(async()=>{load();let {data:sessionData}=await supabaseClient.auth.getSession();if(sessionData.session){cloudUser=sessionData.session.user;await afterLogin()}else await updateCloudUI('Non collegata. Accedi per sincronizzare viaggi e documenti tra i tuoi dispositivi.');checkReminders()}).catch(()=>{load();updateCloudUI('Archivio locale pronto. Accedi per attivare il cloud.')});
 </script>
 </body></html>
