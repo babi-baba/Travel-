@@ -53,6 +53,38 @@ footer{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;border-top:1p
 }
 @media(max-width:420px){.grid{grid-template-columns:1fr 1fr}.row.wrap{flex-wrap:wrap}}
 @media print{header,nav,footer,.no-print,button{display:none!important}body{background:white}main{padding:0}.card{box-shadow:none;break-inside:avoid;border:1px solid #bbb}}
+
+/* TRAVEL visual refresh */
+:root{--navy:#102b46;--blue:#28577d;--bg:#f2f6fb;--line:#dbe5ef;--muted:#657b91;--green:#16835d;--red:#b83c42;--gold:#e4b76b}
+body{background:linear-gradient(180deg,#eaf2f9 0,#f5f8fc 360px,#f5f8fc 100%);color:#18324b}
+header{background:linear-gradient(115deg,#102b46 0%,#1c496c 62%,#36738a 100%);padding-top:26px;padding-bottom:24px;box-shadow:0 8px 26px #102b4622}
+.brand h1{font-size:25px;letter-spacing:2.5px}
+.brand span{font-size:30px;color:#f4d69b}
+header p{font-size:14px;color:#e2edf6;letter-spacing:.2px}
+main{max-width:980px;padding-top:22px}
+.card{border:1px solid #e0e9f1;border-radius:20px;padding:19px;margin-bottom:16px;box-shadow:0 7px 22px #183b5810;transition:box-shadow .2s,border-color .2s}
+.card h2{color:#173b5b;font-size:19px;letter-spacing:-.2px}
+#cloudAuth{background:linear-gradient(125deg,#fff 0%,#f5faff 100%);border:1px solid #d4e2ef;box-shadow:0 10px 28px #173b5b12;padding:22px}
+#cloudAuth h2:before{content:"☁ ";color:#34779a}
+#cloudAuth button{min-height:46px}
+#home>.card:first-child{background:linear-gradient(125deg,#102b46 0%,#1e5275 70%,#3c7b8b 100%);color:white;border:0;box-shadow:0 14px 32px #102b4630;padding:24px}
+#home>.card:first-child h2{color:white;font-size:23px}
+#home>.card:first-child .muted{color:#e0edf6}
+#home .stat{background:#ffffff19;border:1px solid #ffffff25;border-radius:15px;padding:15px}
+#home .stat b{color:#fff;font-size:27px}
+#home .stat .muted{color:#e0edf6}
+nav{gap:9px;padding:13px 0 17px}
+nav button{border-radius:14px;padding:11px 16px;background:#fff;border-color:#d8e4ef;box-shadow:0 2px 7px #183b5808}
+nav button.active{background:#173b5b;border-color:#173b5b;box-shadow:0 5px 13px #173b5b2b}
+input,select,textarea{border-color:#cbd9e7;border-radius:12px;min-height:44px}
+input:focus,select:focus,textarea:focus{outline:3px solid #6ca5cb35;border-color:#4c87b2}
+.primary{background:linear-gradient(110deg,#173b5b,#285d80);border-radius:12px;box-shadow:0 4px 10px #173b5b20}
+.secondary{border-radius:12px}
+.stat{background:#edf4fa}
+.item{border-bottom-color:#edf2f7;padding:13px 0}
+footer{backdrop-filter:blur(10px);background:#ffffffdf}
+@media(max-width:600px){header{padding:21px 16px}main{padding:14px 12px 95px}#cloudAuth{padding:17px}.card{padding:16px;border-radius:17px}#home>.card:first-child{padding:20px}}
+
 </style>
 </head>
 <body>
