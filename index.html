@@ -480,6 +480,7 @@ body:after{
 .share-app-btn:active{transform:scale(.97)}
 @media(max-width:760px){.share-app-btn{right:12px;bottom:12px;padding:8px 12px;font-size:12px}}
 
+.family-status{padding:10px;background:#edf5fa;border-radius:12px;color:#174565}#family .item{padding:12px;border-bottom:1px solid #e1eaf1}
 </style>
 </head>
 <body>
@@ -495,6 +496,7 @@ body:after{
 <button data-tab="deadlines"><span class="nav-icon">🗓️</span><span>Scadenze</span></button>
 <button data-tab="docs"><span class="nav-icon">🛏️</span><span>Hotel</span></button>
 <button data-tab="trips"><span class="nav-icon">🗺️</span><span>Escursioni</span></button>
+<button data-tab="family"><span class="nav-icon">👨‍👩‍👧</span><span>Famiglia</span></button>
 <button data-tab="settings"><span class="nav-icon">⚙️</span><span>Impostazioni</span></button>
 </nav>
 <section id="home" class="pane">
@@ -568,6 +570,7 @@ body:after{
 <div class="row"><div><label>Data</label><input type="date" id="deadlineDate"></div><div><label>Avvisami (giorni prima)</label><select id="deadlineLead"><option value="1">1 giorno</option><option value="7" selected>7 giorni</option><option value="14">14 giorni</option><option value="30">30 giorni</option><option value="60">60 giorni</option><option value="90">90 giorni</option></select></div></div>
 <button class="primary" onclick="addDeadline()">Aggiungi scadenza</button><button class="secondary" onclick="enableNotifications()">Attiva notifiche</button><div id="deadlineList"></div></div>
 </section>
+<section id="family" class="pane hidden"><div class="card"><h2>👨‍👩‍👧 TRAVEL Famiglia</h2><p class="muted">Uno spazio condiviso per organizzare insieme i viaggi. Ogni persona usa il proprio account; i dati personali restano separati.</p><p id="familyStatus">Accedi al tuo account TRAVEL per iniziare.</p></div><div class="card" id="familyCreateCard"><h3>Crea lo spazio della famiglia</h3><label>Nome dello spazio</label><input id="familyName" placeholder="Es. I nostri viaggi"><button class="primary" onclick="createFamilySpace()">Crea spazio famiglia</button></div><div class="card" id="familyJoinCard"><h3>Hai ricevuto un invito?</h3><label>Codice invito</label><input id="familyCode" placeholder="Inserisci il codice"><button class="secondary" onclick="joinFamilySpace()">Entra nello spazio</button></div><div class="card hidden" id="familyActiveCard"><h3 id="familyTitle">La mia famiglia</h3><p>Codice invito: <b id="familyInviteCode"></b></p><button class="secondary" onclick="shareFamilyInvite()">↗ Invita familiari</button><button class="primary" onclick="saveFamilyTrips()">Condividi i miei viaggi</button><button class="secondary" onclick="loadFamilySpace()">Aggiorna</button><div id="familyTripsList"></div></div></section>
 <section id="settings" class="pane hidden">
 <div class="card"><h2>Backup e ripristino</h2><p class="muted">Esporta i dati dell'app in un file JSON. Il backup completo include anche i PDF e le foto archiviati, se il browser consente di leggerli. Conserva il file esportato in un luogo sicuro.</p>
 <button class="primary" onclick="exportBackup()">Esporta backup dati</button><label>Ripristina backup JSON</label><input type="file" id="restoreFile" accept="application/json"><button class="secondary" onclick="restoreBackup()">Ripristina</button></div>
