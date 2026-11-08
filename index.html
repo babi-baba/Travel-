@@ -441,6 +441,40 @@ footer{z-index:8}
  body:after{height:150px}
 }
 
+
+/* Rifinitura: menu compatto e fascia fotografica in fondo */
+.tile-nav{gap:9px!important;padding:11px!important}
+.tile-nav button{height:116px!important;min-height:116px!important;padding:9px 6px!important;border-radius:18px!important;font-size:15px!important;gap:6px!important}
+.tile-nav button .nav-icon{font-size:39px!important}
+.next-trip-panel{padding:17px!important}
+.next-trip-layout{gap:11px!important}
+.next-trip-art{min-height:205px!important}
+.next-trip-info{padding:18px!important}
+.next-trip-info h3{font-size:25px!important}
+.next-trip-info p{font-size:16px!important}
+#cloudAuth{padding:18px!important}
+body:after{
+ content:"";display:block;height:210px;margin-top:18px;
+ background-image:
+  url('https://symphony.cdn.tambourine.com/downtown-grand-hotel-casino/media/untitled-design-31-63d80377f0ecb.png'),
+  url('https://www.deluxetravelstore.com/cdn/shop/files/40303180502T9-Flanerie-Carry-On-Lifestyle_a9628376-faff-4023-ae2b-cd3ab9d877da.webp?v=1731952784&width=1214'),
+  url('https://www.fecomercio-am.org.br/ohs/data/images/2/Artigos-Janeiro_Release-Joao-06.01.26.png?d=bMOXzV');
+ background-size:32.8% 100%,32.8% 100%,32.8% 100%;
+ background-position:left center,center center,right center;
+ background-repeat:no-repeat;
+ border-radius:22px 22px 0 0;
+}
+@media(max-width:760px){
+ .tile-nav{gap:7px!important;padding:8px!important}
+ .tile-nav button{height:91px!important;min-height:91px!important;padding:6px 3px!important;font-size:12px!important;border-radius:14px!important}
+ .tile-nav button .nav-icon{font-size:30px!important}
+ .next-trip-art{min-height:175px!important}
+ .next-trip-info{padding:14px!important}
+ .next-trip-info h3{font-size:22px!important}
+ #cloudAuth{padding:15px!important}
+ body:after{height:125px;margin-top:12px;border-radius:15px 15px 0 0}
+}
+
 </style>
 </head>
 <body>
