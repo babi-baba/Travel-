@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 520">
+<defs>
+ <linearGradient id="sky" x2="1" y2="1"><stop stop-color="#0b2945"/><stop offset=".55" stop-color="#28617b"/><stop offset="1" stop-color="#e7a875"/></linearGradient>
+ <linearGradient id="case" x2="1" y2="1"><stop stop-color="#e5b96f"/><stop offset="1" stop-color="#9d623f"/></linearGradient>
+ <linearGradient id="sea" x2="0" y2="1"><stop stop-color="#f6c58e"/><stop offset="1" stop-color="#477c8b"/></linearGradient>
+</defs>
+<rect width="1600" height="520" fill="url(#sky)"/>
+<circle cx="1290" cy="150" r="105" fill="#ffd89b" opacity=".78"/>
+<path d="M0 325 Q230 255 430 325 T850 300 T1250 320 T1600 285 V520 H0Z" fill="url(#sea)" opacity=".9"/>
+<path d="M0 390 Q240 345 480 390 T960 370 T1600 390 V520 H0Z" fill="#173e59" opacity=".55"/>
+<!-- flight path -->
+<path d="M500 110 C680 20 890 35 1060 120 S1300 190 1430 100" fill="none" stroke="#fff4d8" stroke-width="4" stroke-dasharray="12 13" opacity=".8"/>
+<g transform="translate(1060 86) rotate(-12)" fill="#fff6e7"><path d="M0 18 L55 0 L42 16 L85 25 L84 32 L39 28 L22 52 L14 51 L23 28 L0 25Z"/></g>
+<!-- globe -->
+<g transform="translate(120 120)" opacity=".88"><circle r="90" fill="#d8e5e9" opacity=".22" stroke="#f7e6c5" stroke-width="5"/><ellipse rx="38" ry="90" fill="none" stroke="#f7e6c5" stroke-width="3"/><ellipse rx="90" ry="34" fill="none" stroke="#f7e6c5" stroke-width="3"/><path d="M-85 0H85 M0-88V88" stroke="#f7e6c5" stroke-width="3"/></g>
+<!-- suitcase -->
+<g transform="translate(1180 290) rotate(7)">
+ <rect x="45" y="0" width="145" height="185" rx="18" fill="none" stroke="#f7dfb3" stroke-width="12"/>
+ <rect x="0" y="45" width="230" height="190" rx="22" fill="url(#case)" stroke="#f9dfb3" stroke-width="7"/>
+ <path d="M75 45V235 M155 45V235" stroke="#6f4937" stroke-width="7" opacity=".55"/>
+ <rect x="88" y="104" width="55" height="43" rx="8" fill="#f6e8cc"/><circle cx="115" cy="125" r="10" fill="#315b70"/>
+ <circle cx="45" cy="240" r="13" fill="#102d45"/><circle cx="185" cy="240" r="13" fill="#102d45"/>
+</g>
+<!-- camera -->
+<g transform="translate(360 315) rotate(-5)">
+ <rect x="0" y="25" width="220" height="130" rx="18" fill="#172d40" stroke="#f4e2c4" stroke-width="5"/>
+ <path d="M42 25L62 0H135L155 25" fill="#233f53" stroke="#f4e2c4" stroke-width="5"/>
+ <circle cx="110" cy="90" r="48" fill="#d3e1e6" stroke="#c89a60" stroke-width="10"/><circle cx="110" cy="90" r="30" fill="#31566d"/><circle cx="110" cy="90" r="14" fill="#8eb0bf"/>
+ <circle cx="185" cy="48" r="8" fill="#e6b66e"/>
+</g>
+<!-- passport -->
+<g transform="translate(690 335) rotate(8)">
+ <rect width="150" height="120" rx="12" fill="#8e3f43" stroke="#e7c98f" stroke-width="4"/>
+ <circle cx="75" cy="62" r="29" fill="none" stroke="#e7c98f" stroke-width="3"/>
+ <path d="M46 62H104 M75 33C57 49 57 75 75 91 M75 33C93 49 93 75 75 91" fill="none" stroke="#e7c98f" stroke-width="2"/>
+ <path d="M52 18H98" stroke="#e7c98f" stroke-width="3"/>
+</g>
+<!-- sunglasses -->
+<g transform="translate(900 360) rotate(-9)" fill="none" stroke="#142c42" stroke-width="12">
+ <path d="M0 15Q5 0 20 0H88Q104 0 105 17L99 55Q95 75 70 73H34Q12 73 7 54Z"/>
+ <path d="M125 15Q130 0 145 0H213Q229 0 230 17L224 55Q220 75 195 73H159Q137 73 132 54Z"/>
+ <path d="M105 20Q115 8 125 20 M-2 12L-26 0 M230 12L252 0"/>
+</g>
+<g fill="#fff4dc" opacity=".8"><circle cx="270" cy="260" r="4"/><circle cx="980" cy="235" r="5"/><circle cx="1100" cy="260" r="3"/></g>
+</svg>
