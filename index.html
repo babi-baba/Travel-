@@ -271,30 +271,104 @@ main{max-width:1260px;padding:0 22px 110px}
  .section-heading h2{font-size:22px}
 }
 
+
+/* Restyling strutturale TRAVEL: card dashboard, icone, prossimo viaggio e cloud */
+body{background:linear-gradient(180deg,#e9f3fb 0,#f4f8fd 58%,#eaf3fa 100%);color:#0e2949}
+.travel-hero{height:360px;min-height:360px;border-radius:0;background:linear-gradient(90deg,#0c335455,#103e5d33),url('travel-hero.svg') center 47%/cover no-repeat;position:relative;padding:24px 4vw}
+.hero-top{height:100%;max-width:1300px;margin:auto;display:flex;align-items:flex-start;justify-content:space-between}
+.hero-menu,.hero-profile{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:white;background:#123d60a8;border:2px solid #ffffff70;font-size:25px}
+.hero-brand{position:absolute;left:50%;top:24px;transform:translateX(-50%);text-align:center;width:min(70%,700px)}
+.hero-brand h1{font-family:Georgia,serif;font-size:clamp(48px,7vw,82px);letter-spacing:5px;color:#fff;margin:0;text-shadow:0 3px 16px #09243d}
+.hero-brand p{font-size:clamp(16px,2.1vw,24px);color:#fff;text-shadow:0 2px 8px #09243d}
+.hero-plane{font-size:35px;color:#fff}
+main{max-width:1300px;padding:0 24px 110px}
+.tile-nav{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;padding:14px;margin:-25px 0 16px;position:relative;top:auto;z-index:3;background:#ffffffec;border:1px solid #cfe0f0;border-radius:25px;box-shadow:0 12px 30px #17466b20;backdrop-filter:blur(12px)}
+.tile-nav button{min-width:0;min-height:116px;white-space:normal;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1px solid #d3e3f1;border-radius:20px;background:linear-gradient(145deg,#fff,#f1f7fc);color:#102e4c;font-size:16px;font-weight:750;box-shadow:0 5px 12px #123b5c14;padding:9px 5px}
+.tile-nav button.active{background:linear-gradient(145deg,#145b89,#0e355b);color:#fff;border-color:#145b89}
+.nav-icon{font-size:37px;line-height:1.1}
+.pane:not(.hidden){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;align-items:start}
+.pane:not(.hidden)>.card{min-width:0;margin:0 0 2px}
+#home>.dashboard-welcome,#home>.next-trip-panel,#home>#cloudAuth,#home>.family-preview{grid-column:1/-1}
+.card{background:#ffffffed;border:1px solid #d5e4f2;border-radius:24px;box-shadow:0 8px 25px #173f6014;padding:21px}
+.card h2{color:#102b50;font-size:22px;font-weight:800}
+.dashboard-welcome{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:20px;background:linear-gradient(115deg,#fefefe,#edf6fd);padding:23px}
+.dashboard-welcome h2{font-size:29px;margin:7px 0}
+.dashboard-welcome .muted{font-size:15px}
+.welcome-kicker{color:#2676a0;font-size:11px;font-weight:850;letter-spacing:2px}
+.dashboard-welcome .stat{background:linear-gradient(145deg,#eaf5fc,#dcecf8);border:1px solid #d1e3f1;border-radius:17px;padding:15px}
+.dashboard-welcome .stat b{color:#15527b;font-size:27px}
+.dashboard-welcome .stat .muted{color:#5d7388}
+.section-heading{display:flex;align-items:center;gap:12px;margin-bottom:15px}
+.section-heading h2{flex:1;margin:0}
+.round-plane{width:54px;height:43px;display:grid;place-items:center;border-radius:30px;background:#1781b6;color:#fff;font-size:25px}
+.next-trip-panel{padding:20px}
+.next-trip-layout{display:grid;grid-template-columns:1.35fr 1fr;gap:13px}
+.next-trip-art{min-height:215px;border-radius:19px;padding:19px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;color:white;background:linear-gradient(0deg,#071e35df,#071e3510),url('travel-hero.svg') center/cover no-repeat}
+.next-trip-art strong{font-size:clamp(25px,3vw,37px);max-width:80%;text-shadow:0 2px 9px #071e35}
+.art-label{font-size:11px;letter-spacing:2px;font-weight:850;margin-bottom:7px}
+.art-plane{position:absolute;right:22px;top:15px;font-size:36px}
+.next-trip-info{border:1px solid #dce8f2;border-radius:19px;padding:20px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(145deg,#fff,#f4f9fd)}
+.next-trip-info h3{font-size:25px;color:#122f50;margin-bottom:12px}
+.next-trip-info p{font-size:17px;color:#254766;margin:6px 0}
+.family-preview{display:flex;gap:16px;align-items:center;background:linear-gradient(120deg,#fff,#eef7fd)}
+.family-symbol{font-size:40px;min-width:65px;height:65px;display:grid;place-items:center;border-radius:18px;background:#e2f0fa}
+.family-preview h2{margin-bottom:5px}
+.family-note{font-size:12px;color:#7b8c9d}
+#cloudAuth{display:block!important;margin:0!important;background:linear-gradient(110deg,#fff,#f0f8fd);padding:22px}
+.cloud-heading{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.cloud-heading h2{margin:0}
+.cloud-symbol{font-size:38px;color:#1684b7;background:#e1f1fb;width:64px;height:64px;display:grid;place-items:center;border-radius:50%}
+#cloudStatus{margin:6px 0}
+@media(max-width:760px){
+ .travel-hero{height:300px;min-height:300px}
+ .hero-brand{top:45px;width:75%}
+ .hero-brand h1{font-size:48px}
+ main{padding:0 13px 100px}
+ .tile-nav{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px;margin:-18px 0 14px;border-radius:20px}
+ .tile-nav button{min-height:98px;font-size:13px;border-radius:15px}
+ .nav-icon{font-size:31px}
+ .pane:not(.hidden){display:block}
+ .pane:not(.hidden)>.card{margin-bottom:13px}
+ .dashboard-welcome{display:block;padding:18px}
+ .dashboard-welcome .grid{margin-top:14px}
+ .next-trip-layout{grid-template-columns:1fr}
+ .next-trip-art{min-height:170px}
+ .next-trip-info{padding:16px}
+ .family-preview{align-items:flex-start}
+ .cloud-heading{align-items:flex-start}
+}
+
 </style>
 </head>
 <body>
 <header class="travel-hero"><div class="hero-top"><span class="hero-menu">☰</span><div class="hero-brand"><div class="hero-plane">✈</div><h1>TRAVEL</h1><p>La tua cartella digitale di viaggio</p></div><span class="hero-profile">✦</span></div></header>
 <main>
 <nav id="tabs" class="tile-nav">
-<button class="active" data-tab="home"><span class="nav-icon">▣</span><span>Panoramica</span></button><button data-tab="trips"><span class="nav-icon">✈</span><span>I miei viaggi</span></button><button data-tab="trips"><span class="nav-icon">♙</span><span>Viaggiatori</span></button><button data-tab="docs"><span class="nav-icon">▤</span><span>Documenti</span></button><button data-tab="photos"><span class="nav-icon">▧</span><span>Fotografie</span></button><button data-tab="checklist"><span class="nav-icon">☷</span><span>Checklist</span></button><button data-tab="deadlines"><span class="nav-icon">▦</span><span>Scadenze</span></button><button data-tab="settings"><span class="nav-icon">⚙</span><span>Impostazioni</span></button>
+<button class="active" data-tab="home"><span class="nav-icon">🧳</span><span>Panoramica</span></button>
+<button data-tab="trips"><span class="nav-icon">✈️</span><span>I miei viaggi</span></button>
+<button data-tab="trips"><span class="nav-icon">👥</span><span>Viaggiatori</span></button>
+<button data-tab="docs"><span class="nav-icon">🛂</span><span>Documenti</span></button>
+<button data-tab="photos"><span class="nav-icon">📸</span><span>Fotografie</span></button>
+<button data-tab="checklist"><span class="nav-icon">📋</span><span>Checklist</span></button>
+<button data-tab="deadlines"><span class="nav-icon">🗓️</span><span>Scadenze</span></button>
+<button data-tab="docs"><span class="nav-icon">🛏️</span><span>Hotel</span></button>
+<button data-tab="trips"><span class="nav-icon">🗺️</span><span>Escursioni</span></button>
+<button data-tab="settings"><span class="nav-icon">⚙️</span><span>Impostazioni</span></button>
 </nav>
 <section id="home" class="pane">
-<div class="card"><h2>Benvenuta nella tua cartella viaggi</h2><p class="muted">Organizza viaggi, persone, documenti e scadenze in un unico spazio.</p>
-<div class="grid"><div class="stat"><b id="tripCount">0</b><span class="muted">Viaggi</span></div><div class="stat"><b id="docCount">0</b><span class="muted">Documenti</span></div><div class="stat"><b id="deadlineCount">0</b><span class="muted">Scadenze future</span></div><div class="stat"><b id="peopleCount">0</b><span class="muted">Viaggiatori</span></div></div></div>
-<div class="card"><div class="row"><h2>Prossimo viaggio</h2><button class="secondary fit no-print" onclick="showTab('trips')">Tutti i viaggi</button></div><div id="featured"></div></div>
-<div class="card"><h2>Prossime scadenze</h2><div id="upcoming"></div></div>
-<div class="card"><h2>Accesso rapido</h2><div class="row wrap"><button class="primary" onclick="newTrip()">＋ Nuovo viaggio</button><button class="secondary" onclick="showTab('docs')">＋ Carica documento</button></div></div>
-<div class="card no-print" id="cloudAuth" style="margin-bottom:14px">
- <h2>Account TRAVEL e sincronizzazione</h2>
- <p class="muted" id="cloudStatus">Non collegata. Accedi per sincronizzare viaggi e documenti tra i tuoi dispositivi.</p>
+<div class="card dashboard-welcome"><div class="welcome-copy"><span class="welcome-kicker">IL TUO MONDO, PRONTO A PARTIRE</span><h2>Ogni viaggio inizia da qui</h2><p class="muted">Organizza le partenze, conserva i ricordi e tieni tutto a portata di mano.</p></div><div class="grid"><div class="stat"><b id="tripCount">0</b><span class="muted">Viaggi</span></div><div class="stat"><b id="docCount">0</b><span class="muted">Documenti</span></div><div class="stat"><b id="deadlineCount">0</b><span class="muted">Scadenze</span></div><div class="stat"><b id="peopleCount">0</b><span class="muted">Viaggiatori</span></div></div></div>
+<div class="card next-trip-panel"><div class="section-heading"><span class="round-plane">✈</span><h2>Prossimo viaggio</h2><button class="secondary fit no-print" onclick="showTab('trips')">Tutti i viaggi</button></div><div id="featured"></div></div>
+<div class="card"><div class="section-heading"><h2>Prossime scadenze</h2><button class="secondary fit no-print" onclick="showTab('deadlines')">Vedi tutte</button></div><div id="upcoming"></div></div>
+<div class="card family-preview"><div class="family-symbol">👨‍👩‍👧</div><div><h2>Viaggi condivisi – Famiglia</h2><p class="muted">Uno spazio per organizzare insieme viaggi, documenti e fotografie con i tuoi familiari.</p><span class="family-note">Condivisione familiare: configurazione in preparazione</span></div></div>
+<div class="card no-print" id="cloudAuth">
+ <div class="cloud-heading"><span class="cloud-symbol">☁</span><div><h2>Account TRAVEL e sincronizzazione</h2><p class="muted" id="cloudStatus">Non collegata. Accedi per sincronizzare viaggi e documenti tra i tuoi dispositivi.</p></div></div>
  <div id="authFields">
   <label>Email</label><input type="email" id="authEmail" autocomplete="email" placeholder="La tua email">
   <label>Password</label><input type="password" id="authPassword" autocomplete="current-password" placeholder="Almeno 8 caratteri">
   <div class="row wrap"><button class="primary" onclick="signIn()">Accedi con email</button><button class="secondary" onclick="signUp()">Crea account</button></div>
-   <button class="secondary passkey-btn" onclick="signInPasskey()">Accedi con impronta / Passkey</button>
+  <button class="secondary passkey-btn" onclick="signInPasskey()">Accedi con impronta / Passkey</button>
  </div>
- <div id="authSigned" class="hidden"><div class="row wrap"><button class="primary" onclick="syncCloud(true)">Sincronizza adesso</button><button class="secondary" onclick="signOut()">Esci</button></div><button class="secondary passkey-btn" onclick="registerPasskey()">Attiva accesso con impronta / Passkey su questo dispositivo</button></div>
+ <div id="authSigned" class="hidden"><div class="row wrap"><button class="primary" onclick="syncCloud(true)">⟳ &nbsp; Sincronizza adesso</button><button class="secondary" onclick="signOut()">Esci</button></div><button class="secondary passkey-btn" onclick="registerPasskey()">Attiva accesso con impronta / Passkey su questo dispositivo</button></div>
 </div>
 </section>
 <section id="trips" class="pane hidden">
@@ -401,7 +475,7 @@ function removeDeadline(did){data.deadlines=data.deadlines.filter(x=>x.id!==did)
 function fmt(s){return s?new Date(s+'T12:00:00').toLocaleDateString('it-IT'):'—'}
 function tripName(tid){return data.trips.find(t=>t.id===tid)?.name||'Viaggio non specificato'}
 function renderAll(){renderHome();renderTrips();renderPeople();renderSelects();renderDocs();renderPhotos();renderDeadlines();renderChecklistSelects();renderChecklist()}
-function renderHome(){document.getElementById('tripCount').textContent=data.trips.length;document.getElementById('docCount').textContent=data.docs.length;document.getElementById('deadlineCount').textContent=data.deadlines.filter(d=>!d.done&&d.date>=new Date().toISOString().slice(0,10)).length;document.getElementById('peopleCount').textContent=data.people.length;let f=document.getElementById('featured');let today=new Date().toISOString().slice(0,10);let t=[...data.trips].filter(x=>!x.end||x.end>=today).sort((a,b)=>(a.start||'').localeCompare(b.start||''))[0]||[...data.trips].sort((a,b)=>(b.start||'').localeCompare(a.start||''))[0];f.innerHTML=t?'<div class="next-trip-layout"><div class="next-trip-art"><span class="art-label">'+esc(t.country||'IL TUO VIAGGIO')+'</span><strong>'+esc(t.destination||t.name)+'</strong><span class="art-plane">✈</span></div><div class="next-trip-info"><h3>'+esc(t.destination||t.name)+'</h3><p>▦ &nbsp;'+fmt(t.start)+' – '+fmt(t.end)+'</p><p>♙ &nbsp;'+data.people.length+' viaggiatori</p><button class="secondary" onclick="showTab(\'trips\')">Apri viaggio&nbsp; ›</button></div></div>':'<div class="empty">Nessun viaggio ancora. Crea il tuo primo viaggio.</div>';let ds=data.deadlines.filter(d=>!d.done).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);document.getElementById('upcoming').innerHTML=ds.length?ds.map(d=>`<div class="item"><b>${esc(d.title)}</b><div class="muted">${fmt(d.date)} · ${esc(tripName(d.tripId))}</div></div>`).join(''):'<p class="muted">Nessuna scadenza registrata.</p>'}
+function renderHome(){document.getElementById('tripCount').textContent=data.trips.length;document.getElementById('docCount').textContent=data.docs.length;document.getElementById('deadlineCount').textContent=data.deadlines.filter(d=>!d.done&&d.date>=new Date().toISOString().slice(0,10)).length;document.getElementById('peopleCount').textContent=data.people.length;let f=document.getElementById('featured');let today=new Date().toISOString().slice(0,10);let t=[...data.trips].filter(x=>!x.end||x.end>=today).sort((a,b)=>(a.start||'').localeCompare(b.start||''))[0]||[...data.trips].sort((a,b)=>(b.start||'').localeCompare(a.start||''))[0];f.innerHTML=t?'<div class="next-trip-layout"><div class="next-trip-art"><span class="art-label">IL TUO PROSSIMO VIAGGIO</span><strong>'+esc(t.destination||t.name)+'</strong><span class="art-plane">✈</span></div><div class="next-trip-info"><h3>'+esc(t.destination||t.name)+'</h3><p>▦ &nbsp;'+fmt(t.start)+' – '+fmt(t.end)+'</p><p>♙ &nbsp;'+data.people.length+' viaggiatori</p><button class="secondary" onclick="showTab(\'trips\')">Apri viaggio&nbsp; ›</button></div></div>':'<div class="empty">Nessun viaggio ancora. Crea il tuo primo viaggio.</div>';let ds=data.deadlines.filter(d=>!d.done).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);document.getElementById('upcoming').innerHTML=ds.length?ds.map(d=>`<div class="item"><b>${esc(d.title)}</b><div class="muted">${fmt(d.date)} · ${esc(tripName(d.tripId))}</div></div>`).join(''):'<p class="muted">Nessuna scadenza registrata.</p>'}
 function renderTrips(){document.getElementById('tripList').innerHTML=data.trips.length?data.trips.map(t=>`<div class="item"><div class="itemtop"><div><div class="itemtitle">${esc(t.name)}</div><div class="muted">${esc(t.destination||'')} · ${fmt(t.start)} – ${fmt(t.end)}</div></div><div><button class="smallbtn" onclick="editTrip('${t.id}')">Modifica</button> <button class="smallbtn" onclick="deleteTrip('${t.id}')">Elimina</button></div></div></div>`).join(''):'<div class="empty">Non hai ancora creato viaggi.</div>'}
 function renderPeople(){document.getElementById('peopleList').innerHTML=data.people.map(p=>`<div class="item itemtop"><span>${esc(p.name)}</span><button class="smallbtn" onclick="removePerson('${p.id}')">Rimuovi</button></div>`).join('')}
 function fillSelect(el,items,placeholder){let old=el.value;el.innerHTML=(placeholder?`<option value="">${placeholder}</option>`:'')+items.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');if(items.some(x=>x.id===old))el.value=old}
