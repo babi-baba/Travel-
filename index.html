@@ -596,22 +596,48 @@ let familyId=null;
 let familyRecord=null;
 function familyStatus(msg){document.getElementById('familyStatus').textContent=msg}
 async function loadFamilySpace(){
- if(!cloudUser){familyStatus('Accedi prima al tuo account TRAVEL.');return}
- const m=await supabaseClient.from('travel_family_members').select('family_id').eq('user_id',cloudUser.id).limit(1);
- if(m.error){alert('La configurazione del database famiglia non è ancora attiva.');return}
- if(!m.data.length){familyId=null;familyRecord=null;document.getElementById('familyActiveCard').classList.add('hidden');document.getElementById('familyCreateCard').classList.remove('hidden');document.getElementById('familyJoinCard').classList.remove('hidden');familyStatus('Crea uno spazio famiglia oppure inserisci un codice invito.');return}
- familyId=m.data[0].family_id;
- const q=await supabaseClient.from('travel_families').select('*').eq('id',familyId).single();
- if(q.error){alert(q.error.message);return}
- familyRecord=q.data;
- document.getElementById('familyTitle').textContent=familyRecord.name;
- document.getElementById('familyInviteCode').textContent=familyRecord.invite_code;
- document.getElementById('familyCreateCard').classList.add('hidden');
- document.getElementById('familyJoinCard').classList.add('hidden');
- document.getElementById('familyActiveCard').classList.remove('hidden');
- familyStatus('Spazio famiglia collegato.');
- const trips=familyRecord.shared_trips||[];
- document.getElementById('familyTripsList').innerHTML=trips.length?trips.map(t=>'<div class="item"><b>'+esc(t.name||t.destination||'Viaggio')+'</b><div class="muted">'+esc(t.destination||'')+' · '+fmt(t.start)+' – '+fmt(t.end)+'</div></div>').join(''):'<p class="muted">Nessun viaggio condiviso. Premi “Condividi i miei viaggi”.</p>';
+ const status=document.getElementById('familyStatus');
+ try{
+  status.textContent='Controllo il collegamento al tuo account…';
+  const sessionResult=await supabaseClient.auth.getSession();
+  if(sessionResult.error)throw sessionResult.error;
+  const session=sessionResult.data&&sessionResult.data.session;
+  cloudUser=session?session.user:null;
+  if(!cloudUser){
+   status.textContent='Account non collegato. Apri Panoramica e accedi nel riquadro Account TRAVEL.';
+   document.getElementById('familyActiveCard').classList.add('hidden');
+   document.getElementById('familyCreateCard').classList.remove('hidden');
+   document.getElementById('familyJoinCard').classList.remove('hidden');
+   return;
+  }
+  status.textContent='Accesso verificato. Cerco lo spazio famiglia…';
+  const m=await supabaseClient.from('travel_family_members').select('family_id').eq('user_id',cloudUser.id).limit(1);
+  if(m.error)throw m.error;
+  if(!m.data||!m.data.length){
+   familyId=null;familyRecord=null;
+   document.getElementById('familyActiveCard').classList.add('hidden');
+   document.getElementById('familyCreateCard').classList.remove('hidden');
+   document.getElementById('familyJoinCard').classList.remove('hidden');
+   status.textContent='Account collegato: puoi creare lo spazio famiglia oppure inserire un codice invito.';
+   return;
+  }
+  familyId=m.data[0].family_id;
+  const q=await supabaseClient.from('travel_families').select('*').eq('id',familyId).single();
+  if(q.error)throw q.error;
+  familyRecord=q.data;
+  document.getElementById('familyTitle').textContent=familyRecord.name;
+  document.getElementById('familyInviteCode').textContent=familyRecord.invite_code;
+  document.getElementById('familyCreateCard').classList.add('hidden');
+  document.getElementById('familyJoinCard').classList.add('hidden');
+  document.getElementById('familyActiveCard').classList.remove('hidden');
+  status.textContent='Spazio famiglia collegato.';
+  const trips=familyRecord.shared_trips||[];
+  document.getElementById('familyTripsList').innerHTML=trips.length?trips.map(t=>'<div class="item"><b>'+esc(t.name||t.destination||'Viaggio')+'</b><div class="muted">'+esc(t.destination||'')+' · '+fmt(t.start)+' – '+fmt(t.end)+'</div></div>').join(''):'<p class="muted">Nessun viaggio condiviso. Premi “Condividi i miei viaggi”.</p>';
+ }catch(e){
+  const msg=e&&e.message?e.message:String(e);
+  status.textContent='Errore nel caricamento dello spazio famiglia: '+msg;
+  alert('TRAVEL Famiglia: '+msg);
+ }
 }
 async function createFamilySpace(){
  const btn=document.querySelector('#familyCreateCard button');
