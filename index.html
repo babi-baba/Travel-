@@ -338,6 +338,54 @@ main{max-width:1300px;padding:0 24px 110px}
  .cloud-heading{align-items:flex-start}
 }
 
+
+/* TRAVEL — composizione finale basata sul mockup fotografico */
+.travel-hero{
+ height:405px!important;min-height:405px!important;padding:24px 4vw!important;
+ border-radius:0!important;display:block!important;
+ background:linear-gradient(90deg,rgba(6,30,53,.14),rgba(6,30,53,.10)),
+ url('https://images.pexels.com/photos/5405598/pexels-photo-5405598.jpeg?auto=compress&cs=tinysrgb&w=2000') center 48%/cover no-repeat!important;
+}
+.hero-top{max-width:1300px;height:100%;margin:auto;display:grid;grid-template-columns:60px 1fr 60px;align-items:start}
+.hero-brand{grid-column:2;grid-row:1;align-self:center;justify-self:center;transform:translateY(-3px);text-align:center}
+.hero-brand h1{font-family:Georgia,serif;font-size:clamp(54px,8vw,88px);font-weight:700;letter-spacing:7px;color:#fff;text-shadow:0 3px 15px #082744}
+.hero-brand p{font-size:clamp(16px,2.2vw,24px);color:#fff;text-shadow:0 2px 8px #082744}
+.hero-plane{font-size:34px;color:#fff}
+.hero-menu{grid-column:1;grid-row:1;background:#123d5eb8;color:white}
+.hero-profile{grid-column:3;grid-row:1;background:#e6b85c;color:#fff;border:4px solid #f4d28a}
+main{max-width:1300px!important;padding:0 22px 110px!important}
+.tile-nav{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important;padding:14px!important;margin:-1px 0 16px!important;border-radius:0 0 25px 25px!important}
+.tile-nav button{height:150px;min-height:150px!important;border-radius:22px!important;font-size:clamp(14px,1.6vw,20px)!important}
+.tile-nav button .nav-icon{font-size:clamp(36px,4vw,54px)!important}
+.dashboard-welcome{display:none!important}
+.next-trip-panel{padding:20px!important}
+.next-trip-layout{grid-template-columns:1.45fr 1fr!important;gap:14px!important}
+.next-trip-art{
+ min-height:235px!important;border-radius:22px!important;
+ background:linear-gradient(0deg,rgba(5,25,43,.20),rgba(5,25,43,.02)),
+ url('https://images.sembo.travel/ImageService/ImageHandler.ashx?height=1152&nameOfImage=239391.jpg&resizeMode=FitOutside&semboApp=true&service=sembo&width=1536') center 52%/cover no-repeat!important;
+}
+.next-trip-art strong,.next-trip-art .art-label{display:none}
+.next-trip-info{border-radius:22px!important;padding:24px!important}
+.next-trip-info h3{font-size:30px!important}
+#cloudAuth{margin-top:16px!important;padding:22px!important}
+#cloudAuth h2{font-size:23px!important}
+#home>.card:nth-child(3),#home>.card:nth-child(4){margin-top:14px}
+@media(max-width:760px){
+ .travel-hero{height:290px!important;min-height:290px!important;padding:16px 13px!important;background-position:center!important}
+ .hero-brand h1{font-size:50px;letter-spacing:4px}
+ .hero-menu,.hero-profile{width:42px;height:42px;font-size:21px}
+ main{padding:0 12px 100px!important}
+ .tile-nav{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;padding:10px!important}
+ .tile-nav button{height:112px;min-height:112px!important;border-radius:17px!important;font-size:14px!important}
+ .tile-nav button .nav-icon{font-size:36px!important}
+ .next-trip-layout{grid-template-columns:1fr!important}
+ .next-trip-art{min-height:190px!important}
+ .next-trip-info{padding:17px!important}
+ .next-trip-info h3{font-size:24px!important}
+ #cloudAuth{padding:17px!important}
+}
+
 </style>
 </head>
 <body>
