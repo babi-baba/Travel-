@@ -591,6 +591,56 @@ async function shareApp(){
  }catch(e){if(e&&e.name!=='AbortError')alert('Non è stato possibile condividere automaticamente. Puoi copiare questo link: '+url)}
 }
 
+
+let familyId=null;
+let familyRecord=null;
+function familyStatus(msg){document.getElementById('familyStatus').textContent=msg}
+async function loadFamilySpace(){
+ if(!cloudUser){familyStatus('Accedi prima al tuo account TRAVEL.');return}
+ const m=await supabaseClient.from('travel_family_members').select('family_id').eq('user_id',cloudUser.id).limit(1);
+ if(m.error){alert('La configurazione del database famiglia non è ancora attiva.');return}
+ if(!m.data.length){familyId=null;familyRecord=null;document.getElementById('familyActiveCard').classList.add('hidden');document.getElementById('familyCreateCard').classList.remove('hidden');document.getElementById('familyJoinCard').classList.remove('hidden');familyStatus('Crea uno spazio famiglia oppure inserisci un codice invito.');return}
+ familyId=m.data[0].family_id;
+ const q=await supabaseClient.from('travel_families').select('*').eq('id',familyId).single();
+ if(q.error){alert(q.error.message);return}
+ familyRecord=q.data;
+ document.getElementById('familyTitle').textContent=familyRecord.name;
+ document.getElementById('familyInviteCode').textContent=familyRecord.invite_code;
+ document.getElementById('familyCreateCard').classList.add('hidden');
+ document.getElementById('familyJoinCard').classList.add('hidden');
+ document.getElementById('familyActiveCard').classList.remove('hidden');
+ familyStatus('Spazio famiglia collegato.');
+ const trips=familyRecord.shared_trips||[];
+ document.getElementById('familyTripsList').innerHTML=trips.length?trips.map(t=>'<div class="item"><b>'+esc(t.name||t.destination||'Viaggio')+'</b><div class="muted">'+esc(t.destination||'')+' · '+fmt(t.start)+' – '+fmt(t.end)+'</div></div>').join(''):'<p class="muted">Nessun viaggio condiviso. Premi “Condividi i miei viaggi”.</p>';
+}
+async function createFamilySpace(){
+ if(!cloudUser){alert('Accedi prima al tuo account TRAVEL.');return}
+ const r=await supabaseClient.rpc('create_travel_family',{p_name:document.getElementById('familyName').value.trim()||'La mia famiglia'});
+ if(r.error){alert('Prima di creare lo spazio, applica lo script supabase/travel-family.sql nel database Supabase.');return}
+ await loadFamilySpace();
+}
+async function joinFamilySpace(){
+ if(!cloudUser){alert('Accedi prima al tuo account TRAVEL.');return}
+ const code=document.getElementById('familyCode').value.trim().toUpperCase();
+ if(!code){alert('Inserisci il codice invito.');return}
+ const r=await supabaseClient.rpc('join_travel_family',{p_code:code});
+ if(r.error){alert(r.error.message);return}
+ await loadFamilySpace();
+}
+async function saveFamilyTrips(){
+ if(!familyId){alert('Crea o apri prima uno spazio famiglia.');return}
+ const shared=(data.trips||[]).map(t=>({id:t.id,name:t.name,destination:t.destination,country:t.country,start:t.start,end:t.end,notes:t.notes}));
+ const r=await supabaseClient.from('travel_families').update({shared_trips:shared,updated_at:new Date().toISOString()}).eq('id',familyId).select('*').single();
+ if(r.error){alert('Salvataggio non riuscito: '+r.error.message);return}
+ familyRecord=r.data;await loadFamilySpace();alert('Viaggi condivisi aggiornati.');
+}
+async function shareFamilyInvite(){
+ if(!familyRecord)return;
+ const url='https://babi-baba.github.io/Travel-/';
+ const msg='Unisciti al nostro spazio TRAVEL Famiglia. Apri l’app, accedi con il tuo account e inserisci il codice: '+familyRecord.invite_code;
+ try{if(navigator.share){await navigator.share({title:'Invito TRAVEL Famiglia',text:msg,url:url})}else{await navigator.clipboard.writeText(msg+' '+url);alert('Invito copiato. Puoi inviarlo su WhatsApp.')}}catch(e){if(e.name!=='AbortError')alert(msg)}
+}
+
 </script>
 <script>
 const SUPABASE_URL='https://rhocfrmzwzpihpvmayny.supabase.co';
