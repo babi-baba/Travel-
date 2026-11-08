@@ -220,10 +220,61 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 }
 @media(max-width:380px){nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
+
+/* TRAVEL — riferimento grafico della schermata inviata */
+.travel-hero{height:320px;min-height:320px;padding:24px 5vw;color:#fff;border-radius:0 0 26px 26px;background:linear-gradient(90deg,#092d4d99,#124f7180),url('travel-hero.svg') center 45%/cover no-repeat;display:block}
+.hero-top{max-width:1260px;height:100%;margin:auto;display:flex;align-items:flex-start;justify-content:space-between}
+.hero-menu,.hero-profile{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#0b3657a8;border:1px solid #ffffff65;font-size:27px}
+.hero-brand{margin:auto;text-align:center;transform:translateY(8px)}
+.hero-brand h1{font-family:Georgia,serif;font-size:clamp(48px,8vw,76px);letter-spacing:5px;margin:0;text-shadow:0 4px 16px #102b46}
+.hero-brand p{font-size:clamp(15px,2.4vw,22px);margin:4px 0;color:#fff}
+.hero-plane{font-size:36px;line-height:1}
+main{max-width:1260px;padding:0 22px 110px}
+.tile-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:14px;margin:18px 0 18px;position:relative;top:auto;background:#ffffffed;border:1px solid #d5e5f4;border-radius:25px;box-shadow:0 12px 30px #143c5c20}
+.tile-nav button{min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;white-space:normal;border:1px solid #d3e2f0;border-radius:20px;background:linear-gradient(150deg,#fff,#f2f7fc);color:#102f4d;font-size:16px;font-weight:750;box-shadow:0 5px 12px #143c5c12}
+.tile-nav button.active{background:linear-gradient(145deg,#1b5c85,#0d3559);color:white;border-color:#1b5c85}
+.nav-icon{font-size:38px;line-height:1;color:inherit}
+.dashboard-welcome{background:linear-gradient(110deg,#123e60,#26769a);color:white;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.dashboard-welcome h2{color:white;font-size:clamp(24px,4vw,34px)}
+.dashboard-welcome .muted{color:#e1eff7}
+.dashboard-welcome .stat{background:#ffffff1b;border:1px solid #ffffff35;color:white}
+.dashboard-welcome .stat b{color:white}
+.welcome-kicker{font-size:11px;letter-spacing:2px;font-weight:800;color:#f3d39b}
+.next-trip-panel{padding:20px}
+.section-heading{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.section-heading h2{margin:0;flex:1;font-size:26px}
+.round-plane{width:54px;height:42px;border-radius:30px;background:#2080b2;color:white;display:grid;place-items:center;font-size:24px}
+.next-trip-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+.next-trip-art{min-height:205px;border-radius:19px;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;color:white;background:linear-gradient(0deg,#071e35df,#071e3510),url('travel-hero.svg') center/cover no-repeat}
+.next-trip-art strong{font-size:clamp(23px,3vw,34px);max-width:80%;text-shadow:0 2px 9px #071e35}
+.art-label{font-size:11px;letter-spacing:2px;font-weight:800;margin-bottom:7px}
+.art-plane{position:absolute;right:22px;top:15px;font-size:34px}
+.next-trip-info{border:1px solid #dce8f2;border-radius:19px;padding:20px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(145deg,#fff,#f5f9fd)}
+.next-trip-info h3{font-size:24px;color:#122f50;margin-bottom:12px}
+.next-trip-info p{font-size:16px;color:#254766;margin:5px 0}
+.next-trip-info button{margin-top:12px;align-self:flex-start}
+#cloudAuth{margin:0!important}
+@media(min-width:900px){.pane:not(.hidden){grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-welcome,.next-trip-panel,#home>.card:nth-child(3),#home>.card:nth-child(4),#cloudAuth{grid-column:1/-1}}
+@media(max-width:700px){
+ .travel-hero{height:270px;min-height:270px;padding:18px 15px;background-position:center}
+ .hero-menu,.hero-profile{width:42px;height:42px;font-size:22px}
+ .hero-brand h1{font-size:48px}
+ main{padding:0 13px 100px}
+ .tile-nav{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px;margin:0 0 14px;border-radius:20px}
+ .tile-nav button{min-height:96px;padding:8px 4px;font-size:13px;border-radius:15px}
+ .nav-icon{font-size:31px}
+ .dashboard-welcome{display:block;padding:18px}
+ .dashboard-welcome .grid{margin-top:14px}
+ .next-trip-layout{grid-template-columns:1fr}
+ .next-trip-art{min-height:170px}
+ .next-trip-info{padding:16px}
+ .section-heading h2{font-size:22px}
+}
+
 </style>
 </head>
 <body>
-<header><div class="brand"><h1>TRAVEL</h1><span>✈</span></div><p>La tua cartella digitale di viaggio</p></header>
+<header class="travel-hero"><div class="hero-top"><span class="hero-menu">☰</span><div class="hero-brand"><div class="hero-plane">✈</div><h1>TRAVEL</h1><p>La tua cartella digitale di viaggio</p></div><span class="hero-profile">✦</span></div></header>
 <main>
 <div class="card no-print" id="cloudAuth" style="margin-bottom:14px">
  <h2>Account TRAVEL e sincronizzazione</h2>
@@ -236,8 +287,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
  </div>
  <div id="authSigned" class="hidden"><div class="row wrap"><button class="primary" onclick="syncCloud(true)">Sincronizza adesso</button><button class="secondary" onclick="signOut()">Esci</button></div><button class="secondary passkey-btn" onclick="registerPasskey()">Attiva accesso con impronta / Passkey su questo dispositivo</button></div>
 </div>
-<nav id="tabs">
-<button class="active" data-tab="home">Panoramica</button><button data-tab="trips">I miei viaggi</button><button data-tab="docs">Documenti</button><button data-tab="photos">📷 Fotografie</button><button data-tab="checklist">Checklist USA</button><button data-tab="deadlines">Scadenze</button><button data-tab="settings">Impostazioni</button>
+<nav id="tabs" class="tile-nav">
+<button class="active" data-tab="home"><span class="nav-icon">▣</span><span>Panoramica</span></button><button data-tab="trips"><span class="nav-icon">✈</span><span>I miei viaggi</span></button><button data-tab="trips"><span class="nav-icon">♙</span><span>Viaggiatori</span></button><button data-tab="docs"><span class="nav-icon">▤</span><span>Documenti</span></button><button data-tab="photos"><span class="nav-icon">▧</span><span>Fotografie</span></button><button data-tab="checklist"><span class="nav-icon">☷</span><span>Checklist</span></button><button data-tab="deadlines"><span class="nav-icon">▦</span><span>Scadenze</span></button><button data-tab="settings"><span class="nav-icon">⚙</span><span>Impostazioni</span></button>
 </nav>
 <section id="home" class="pane">
 <div class="card"><h2>Benvenuta nella tua cartella viaggi</h2><p class="muted">Organizza viaggi, persone, documenti e scadenze in un unico spazio.</p>
