@@ -386,6 +386,61 @@ main{max-width:1300px!important;padding:0 22px 110px!important}
  #cloudAuth{padding:17px!important}
 }
 
+
+/* TRAVEL — fedele alla schermata di riferimento */
+.travel-hero{
+ height:405px!important;min-height:405px!important;padding:0!important;border-radius:0!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ background:linear-gradient(90deg,rgba(9,35,58,.08),rgba(9,35,58,.08)),url('https://cedirates.com/_next/image/?q=75&url=https%3A%2F%2Fsportal365images.com%2Fprocess%2Fsmp-images-production%2Fpulse.com.gh%2F18022025%2F5ad0885d-34a9-4f18-ae47-4bac63309f53.jpg&w=1920') center 50%/cover no-repeat!important;
+}
+.hero-top{width:100%;height:100%;max-width:none;display:grid;grid-template-columns:1fr;align-items:center;justify-items:center}
+.hero-brand{grid-column:1;grid-row:1;align-self:center;justify-self:center;transform:translateY(-8px);text-align:center}
+.hero-brand h1{font-family:Georgia,serif!important;font-size:clamp(54px,8vw,88px)!important;letter-spacing:7px!important;color:white!important;text-shadow:0 3px 15px #082744!important}
+.hero-brand p{font-size:clamp(16px,2.2vw,24px)!important;color:white!important;text-shadow:0 2px 8px #082744}
+.hero-plane{font-size:34px;color:white}
+.hero-menu{position:absolute;top:20px;left:22px;background:#123d5eb8;color:white}
+.hero-profile{position:absolute;top:20px;right:22px;background:#e6b85c;color:white;border:4px solid #f4d28a}
+main{max-width:1300px!important;padding:0 22px 0!important}
+.tile-nav{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important;padding:14px!important;margin:0 0 16px!important;position:relative!important;top:auto!important;border-radius:0 0 25px 25px!important;background:#ffffffed!important;border:1px solid #d5e5f4!important;box-shadow:0 12px 30px #143c5c20!important}
+.tile-nav button{height:150px!important;min-height:150px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:9px!important;border-radius:22px!important;font-size:clamp(14px,1.6vw,20px)!important;white-space:normal!important}
+.tile-nav button .nav-icon{font-size:clamp(36px,4vw,54px)!important;line-height:1.1}
+.dashboard-welcome,.family-preview{display:none!important}
+.next-trip-panel{padding:20px!important}
+.next-trip-layout{display:grid!important;grid-template-columns:1.45fr 1fr!important;gap:14px!important}
+.next-trip-art{min-height:235px!important;border-radius:22px!important;background:linear-gradient(0deg,rgba(5,25,43,.06),rgba(5,25,43,.02)),url('https://symphony.cdn.tambourine.com/downtown-grand-hotel-casino/media/untitled-design-31-63d80377f0ecb.png') center 52%/cover no-repeat!important}
+.next-trip-art .art-label,.next-trip-art strong,.next-trip-art .art-plane{display:none!important}
+.next-trip-info{border:1px solid #dce8f2!important;border-radius:22px!important;padding:24px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;background:linear-gradient(145deg,#fff,#f5f9fd)!important}
+.next-trip-info h3{font-size:30px!important;color:#122f50!important}
+.next-trip-info p{font-size:18px!important;color:#254766!important}
+.next-trip-info button{margin-top:12px!important;align-self:flex-start!important}
+#cloudAuth{margin:16px 0 0!important;padding:22px!important;border-radius:24px!important;background:linear-gradient(120deg,#fff,#f2f8fd)!important}
+.cloud-heading{display:flex;align-items:center;gap:18px}
+.cloud-symbol{width:74px;height:74px;flex:0 0 74px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#39a0cf,#126092);color:white;font-size:40px}
+#cloudAuth h2{font-size:24px!important;color:#122f50!important}
+#cloudStatus{font-size:17px!important;color:#244766!important}
+#authSigned .primary{min-width:250px}
+body:after{content:"";display:block;height:235px;margin-top:0;background:url('./travel-hero.svg') center 54%/cover no-repeat}
+footer{z-index:8}
+@media(max-width:760px){
+ .travel-hero{height:285px!important;min-height:285px!important;background-position:center!important}
+ .hero-brand h1{font-size:50px!important;letter-spacing:4px!important}
+ .hero-menu,.hero-profile{width:42px;height:42px;font-size:21px;top:12px}
+ main{padding:0 12px 0!important}
+ .tile-nav{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;padding:10px!important}
+ .tile-nav button{height:112px!important;min-height:112px!important;border-radius:17px!important;font-size:14px!important}
+ .tile-nav button .nav-icon{font-size:36px!important}
+ .next-trip-layout{grid-template-columns:1fr!important}
+ .next-trip-art{min-height:190px!important}
+ .next-trip-info{padding:17px!important}
+ .next-trip-info h3{font-size:24px!important}
+ #cloudAuth{padding:17px!important}
+ .cloud-heading{gap:12px}
+ .cloud-symbol{width:55px;height:55px;flex-basis:55px;font-size:30px}
+ #cloudAuth h2{font-size:19px!important}
+ #cloudStatus{font-size:14px!important}
+ body:after{height:150px}
+}
+
 </style>
 </head>
 <body>
