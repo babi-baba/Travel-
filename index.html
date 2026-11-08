@@ -616,21 +616,35 @@ async function loadFamilySpace(){
 async function createFamilySpace(){
  const btn=document.querySelector('#familyCreateCard button');
  try{
-  if(!cloudUser){alert('Prima devi accedere al tuo account TRAVEL. Ti porto alla sezione di accesso.');showTab('home');setTimeout(()=>{const box=document.getElementById('cloudAuth');if(box){box.scrollIntoView({behavior:'smooth',block:'center'});const email=document.getElementById('authEmail');if(email)email.focus()}},250);familyStatus('Accedi al tuo account TRAVEL nella sezione Panoramica, poi torna qui.');return}
-  if(btn){btn.disabled=true;btn.textContent='Creazione in corso…'}
-  familyStatus('Sto creando lo spazio famiglia nel cloud…');
-  const {data:newFamilyId,error}=await supabaseClient.rpc('create_travel_family',{p_name:document.getElementById('familyName').value.trim()||'La mia famiglia'});
-  if(error)throw error;
-  if(!newFamilyId)throw new Error('Supabase non ha restituito l’identificativo dello spazio.');
-  familyId=newFamilyId;
-  familyStatus('Spazio creato. Sto caricando i dettagli…');
+  if(btn){btn.disabled=true;btn.textContent='Verifico accesso…'}
+  familyStatus('Verifico il collegamento al tuo account TRAVEL…');
+  const sessionResult=await supabaseClient.auth.getSession();
+  if(sessionResult.error)throw sessionResult.error;
+  if(sessionResult.data&&sessionResult.data.session)cloudUser=sessionResult.data.session.user;
+  if(!cloudUser){
+   familyStatus('Non risulti collegata. Apri Panoramica e accedi con email e password nel riquadro Account TRAVEL.');
+   alert('Non risulti collegata a TRAVEL. Ora apro la sezione Panoramica: accedi nel riquadro Account TRAVEL e poi torna in Famiglia.');
+   if(btn){btn.disabled=false;btn.textContent='Crea spazio famiglia'}
+   showTab('home');
+   const box=document.getElementById('cloudAuth');
+   if(box)box.scrollIntoView({behavior:'smooth',block:'center'});
+   return;
+  }
+  if(btn)btn.textContent='Creazione in corso…';
+  await updateCloudUI('Accesso verificato: '+cloudUser.email);
+  familyStatus('Creo lo spazio famiglia…');
+  const result=await supabaseClient.rpc('create_travel_family',{p_name:document.getElementById('familyName').value.trim()||'La mia famiglia'});
+  if(result.error)throw result.error;
+  if(!result.data)throw new Error('Il database non ha restituito il codice identificativo dello spazio.');
+  familyId=result.data;
+  familyStatus('Spazio creato. Carico i dettagli…');
   await loadFamilySpace();
-  if(!familyRecord)throw new Error('Lo spazio è stato creato, ma non riesco ancora a leggerne i dettagli. Premi Aggiorna.');
+  if(!familyRecord)throw new Error('Spazio creato, ma non riesco a caricarne i dettagli. Premi Aggiorna.');
   familyStatus('Spazio famiglia creato correttamente!');
  }catch(e){
-  const msg=(e&&e.message)?e.message:String(e);
-  familyStatus('Creazione non riuscita: '+msg);
-  alert('Non sono riuscita a creare lo spazio famiglia. Dettaglio: '+msg);
+  const msg=e&&e.message?e.message:String(e);
+  familyStatus('ERRORE: '+msg);
+  alert('TRAVEL Famiglia: '+msg);
  }finally{
   if(btn){btn.disabled=false;btn.textContent='Crea spazio famiglia'}
  }
