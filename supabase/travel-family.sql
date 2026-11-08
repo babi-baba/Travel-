@@ -57,3 +57,6 @@ begin
 end; $$;
 grant execute on function public.create_travel_family(text) to authenticated;
 grant execute on function public.join_travel_family(text) to authenticated;
+
+revoke all on function public.create_travel_family(text) from public, anon;
+revoke all on function public.join_travel_family(text) from public, anon;
