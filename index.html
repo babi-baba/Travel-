@@ -614,10 +614,26 @@ async function loadFamilySpace(){
  document.getElementById('familyTripsList').innerHTML=trips.length?trips.map(t=>'<div class="item"><b>'+esc(t.name||t.destination||'Viaggio')+'</b><div class="muted">'+esc(t.destination||'')+' · '+fmt(t.start)+' – '+fmt(t.end)+'</div></div>').join(''):'<p class="muted">Nessun viaggio condiviso. Premi “Condividi i miei viaggi”.</p>';
 }
 async function createFamilySpace(){
- if(!cloudUser){alert('Accedi prima al tuo account TRAVEL.');return}
- const r=await supabaseClient.rpc('create_travel_family',{p_name:document.getElementById('familyName').value.trim()||'La mia famiglia'});
- if(r.error){alert('Prima di creare lo spazio, applica lo script supabase/travel-family.sql nel database Supabase.');return}
- await loadFamilySpace();
+ const btn=document.querySelector('#familyCreateCard button');
+ try{
+  if(!cloudUser){familyStatus('Non sei collegata: torna in Panoramica e accedi al tuo account TRAVEL.');return}
+  if(btn){btn.disabled=true;btn.textContent='Creazione in corso…'}
+  familyStatus('Sto creando lo spazio famiglia nel cloud…');
+  const {data:newFamilyId,error}=await supabaseClient.rpc('create_travel_family',{p_name:document.getElementById('familyName').value.trim()||'La mia famiglia'});
+  if(error)throw error;
+  if(!newFamilyId)throw new Error('Supabase non ha restituito l’identificativo dello spazio.');
+  familyId=newFamilyId;
+  familyStatus('Spazio creato. Sto caricando i dettagli…');
+  await loadFamilySpace();
+  if(!familyRecord)throw new Error('Lo spazio è stato creato, ma non riesco ancora a leggerne i dettagli. Premi Aggiorna.');
+  familyStatus('Spazio famiglia creato correttamente!');
+ }catch(e){
+  const msg=(e&&e.message)?e.message:String(e);
+  familyStatus('Creazione non riuscita: '+msg);
+  alert('Non sono riuscita a creare lo spazio famiglia. Dettaglio: '+msg);
+ }finally{
+  if(btn){btn.disabled=false;btn.textContent='Crea spazio famiglia'}
+ }
 }
 async function joinFamilySpace(){
  if(!cloudUser){alert('Accedi prima al tuo account TRAVEL.');return}
