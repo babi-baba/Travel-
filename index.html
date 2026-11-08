@@ -475,10 +475,15 @@ body:after{
  body:after{height:125px;margin-top:12px;border-radius:15px 15px 0 0}
 }
 
+
+.share-app-btn{position:absolute;right:22px;bottom:16px;border:1px solid #ffffffa8;border-radius:22px;padding:10px 17px;background:#0b4778df;color:#fff;font-size:14px;font-weight:700;box-shadow:0 4px 14px #08274455;cursor:pointer}
+.share-app-btn:active{transform:scale(.97)}
+@media(max-width:760px){.share-app-btn{right:12px;bottom:12px;padding:8px 12px;font-size:12px}}
+
 </style>
 </head>
 <body>
-<header class="travel-hero"><div class="hero-top"><span class="hero-menu">☰</span><div class="hero-brand"><div class="hero-plane">✈</div><h1>TRAVEL</h1><p>La tua cartella digitale di viaggio</p></div><span class="hero-profile">✦</span></div></header>
+<header class="travel-hero"><div class="hero-top"><span class="hero-menu">☰</span><div class="hero-brand"><div class="hero-plane">✈</div><h1>TRAVEL</h1><p>La tua cartella digitale di viaggio</p></div><span class="hero-profile">✦</span><button class="share-app-btn" type="button" onclick="shareApp()">↗ Condividi TRAVEL</button></div></header>
 <main>
 <nav id="tabs" class="tile-nav">
 <button class="active" data-tab="home"><span class="nav-icon">🧳</span><span>Panoramica</span></button>
@@ -572,7 +577,18 @@ body:after{
 </section>
 </main>
 <footer>TRAVEL · Archivio personale di viaggio · Versione 5 · sincronizzazione manuale</footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0">
+async function shareApp(){
+ const url='https://babi-baba.github.io/Travel-/';
+ const payload={title:'TRAVEL – La tua cartella digitale di viaggio',text:'Apri TRAVEL, la mia app per organizzare i viaggi:',url};
+ try{
+  if(navigator.share){await navigator.share(payload);return}
+  if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(url);alert('Link di TRAVEL copiato! Ora puoi incollarlo in WhatsApp o dove preferisci.');return}
+  window.prompt('Copia questo link per condividerlo:',url);
+ }catch(e){if(e&&e.name!=='AbortError')alert('Non è stato possibile condividere automaticamente. Puoi copiare questo link: '+url)}
+}
+
+</script>
 <script>
 const SUPABASE_URL='https://rhocfrmzwzpihpvmayny.supabase.co';
 const SUPABASE_KEY='sb_publishable_Pu_9vCtdFPYikDTVAAOQNg_HFzIDUCT';
