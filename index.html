@@ -496,7 +496,7 @@ body:after{
 <button data-tab="deadlines"><span class="nav-icon">🗓️</span><span>Scadenze</span></button>
 <button data-tab="docs"><span class="nav-icon">🛏️</span><span>Hotel</span></button>
 <button data-tab="trips"><span class="nav-icon">🗺️</span><span>Escursioni</span></button>
-<button data-tab="family"><span class="nav-icon">👨‍👩‍👧</span><span>Famiglia</span></button>
+<button data-tab="family" onclick="showTab('family')"><span class="nav-icon">👨‍👩‍👧</span><span>Famiglia</span></button>
 <button data-tab="settings"><span class="nav-icon">⚙️</span><span>Impostazioni</span></button>
 </nav>
 <section id="home" class="pane">
@@ -709,8 +709,8 @@ let fileDb;
 function load(){try{data=JSON.parse(localStorage.getItem(DB))||data}catch(e){};data.checklists=data.checklists||{};data.photos=data.photos||[];renderAll()}
 function save(){localStorage.setItem(DB,JSON.stringify(data));renderAll()}
 function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
-function showTab(t){document.querySelectorAll('.pane').forEach(x=>x.classList.add('hidden'));document.getElementById(t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));renderAll();if(t==='family'&&typeof loadFamilySpace==='function'){let code=new URLSearchParams(location.search).get('family');if(code&&document.getElementById('familyCode'))document.getElementById('familyCode').value=code;loadFamilySpace()}}
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+function showTab(t){document.querySelectorAll('.pane').forEach(x=>x.classList.add('hidden'));document.getElementById(t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));renderAll();if(t==='family'){let code=new URLSearchParams(location.search).get('family');if(code&&document.getElementById('familyCode'))document.getElementById('familyCode').value=code;familyStatus('Sezione Famiglia aperta: controllo account…');loadFamilySpace().catch(e=>{familyStatus('Errore caricamento: '+(e.message||e));alert('TRAVEL Famiglia: '+(e.message||e))})}}
+document.querySelectorAll('nav button').forEach(b=>{if(b.dataset.tab!=='family')b.onclick=()=>showTab(b.dataset.tab)});
 function openFileDb(){return new Promise((resolve,reject)=>{let r=indexedDB.open(FILEDB,1);r.onupgradeneeded=()=>r.result.createObjectStore('files',{keyPath:'id'});r.onsuccess=()=>{fileDb=r.result;resolve(fileDb)};r.onerror=()=>reject(r.error)})}
 function putFile(obj){return new Promise((res,rej)=>{let tx=fileDb.transaction('files','readwrite');tx.objectStore('files').put(obj);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
 function getFile(fid){return new Promise((res,rej)=>{let r=fileDb.transaction('files').objectStore('files').get(fid);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
