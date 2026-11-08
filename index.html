@@ -616,7 +616,7 @@ async function loadFamilySpace(){
 async function createFamilySpace(){
  const btn=document.querySelector('#familyCreateCard button');
  try{
-  if(!cloudUser){familyStatus('Non sei collegata: torna in Panoramica e accedi al tuo account TRAVEL.');return}
+  if(!cloudUser){alert('Prima devi accedere al tuo account TRAVEL. Ti porto alla sezione di accesso.');showTab('home');setTimeout(()=>{const box=document.getElementById('cloudAuth');if(box){box.scrollIntoView({behavior:'smooth',block:'center'});const email=document.getElementById('authEmail');if(email)email.focus()}},250);familyStatus('Accedi al tuo account TRAVEL nella sezione Panoramica, poi torna qui.');return}
   if(btn){btn.disabled=true;btn.textContent='Creazione in corso…'}
   familyStatus('Sto creando lo spazio famiglia nel cloud…');
   const {data:newFamilyId,error}=await supabaseClient.rpc('create_travel_family',{p_name:document.getElementById('familyName').value.trim()||'La mia famiglia'});
