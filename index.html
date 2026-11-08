@@ -636,8 +636,8 @@ async function saveFamilyTrips(){
 }
 async function shareFamilyInvite(){
  if(!familyRecord)return;
- const url='https://babi-baba.github.io/Travel-/';
- const msg='Unisciti al nostro spazio TRAVEL Famiglia. Apri l’app, accedi con il tuo account e inserisci il codice: '+familyRecord.invite_code;
+ const url='https://babi-baba.github.io/Travel-/?family='+encodeURIComponent(familyRecord.invite_code);
+ const msg='Unisciti al nostro spazio TRAVEL Famiglia. Apri il link, accedi con il tuo account: il codice invito sarà già inserito.';
  try{if(navigator.share){await navigator.share({title:'Invito TRAVEL Famiglia',text:msg,url:url})}else{await navigator.clipboard.writeText(msg+' '+url);alert('Invito copiato. Puoi inviarlo su WhatsApp.')}}catch(e){if(e.name!=='AbortError')alert(msg)}
 }
 
@@ -653,7 +653,7 @@ let fileDb;
 function load(){try{data=JSON.parse(localStorage.getItem(DB))||data}catch(e){};data.checklists=data.checklists||{};data.photos=data.photos||[];renderAll()}
 function save(){localStorage.setItem(DB,JSON.stringify(data));renderAll()}
 function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
-function showTab(t){document.querySelectorAll('.pane').forEach(x=>x.classList.add('hidden'));document.getElementById(t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));renderAll();if(t==='family'&&typeof loadFamilySpace==='function')loadFamilySpace()}
+function showTab(t){document.querySelectorAll('.pane').forEach(x=>x.classList.add('hidden'));document.getElementById(t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));renderAll();if(t==='family'&&typeof loadFamilySpace==='function'){let code=new URLSearchParams(location.search).get('family');if(code&&document.getElementById('familyCode'))document.getElementById('familyCode').value=code;loadFamilySpace()}}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
 function openFileDb(){return new Promise((resolve,reject)=>{let r=indexedDB.open(FILEDB,1);r.onupgradeneeded=()=>r.result.createObjectStore('files',{keyPath:'id'});r.onsuccess=()=>{fileDb=r.result;resolve(fileDb)};r.onerror=()=>reject(r.error)})}
 function putFile(obj){return new Promise((res,rej)=>{let tx=fileDb.transaction('files','readwrite');tx.objectStore('files').put(obj);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})}
