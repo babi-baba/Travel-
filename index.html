@@ -171,6 +171,55 @@ header{background:linear-gradient(90deg,#102b46dd,#17476888),url('travel-hero.sv
 .photo-actions{display:flex;gap:6px;padding:0 10px 10px}.photo-actions button{flex:1}
 .photo-empty{padding:28px 12px;text-align:center;color:var(--muted);border:1px dashed #c9d9e7;border-radius:15px}
 @media(max-width:600px){header{min-height:170px;background-position:center} .photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.photo-card img{height:132px}}
+
+/* TRAVEL 2026 — interfaccia più ordinata e leggibile */
+:root{--surface:#fff;--soft:#edf4f9;--shadow:0 12px 34px rgba(16,43,70,.09)}
+body{background:linear-gradient(180deg,#eaf2f8 0,#f5f8fc 300px);color:#17324a}
+header{min-height:210px;padding:34px max(22px,calc((100vw - 1280px)/2));background-image:linear-gradient(90deg,rgba(10,39,64,.88),rgba(16,54,78,.36)),url('travel-hero.svg');background-position:center 48%;background-size:cover;border-radius:0 0 28px 28px}
+.brand h1{font-size:clamp(28px,4vw,36px);letter-spacing:3px;text-shadow:0 2px 12px #071d30}
+header p{font-size:16px;text-shadow:0 1px 8px #071d30}
+main{max-width:1280px;padding:26px 28px 110px}
+#cloudAuth{max-width:100%;margin-top:2px!important;border-radius:24px;box-shadow:var(--shadow)}
+nav{position:sticky;top:8px;z-index:5;padding:12px;margin:18px 0 20px;background:#f5f8fbeF;border:1px solid #dce7f0;border-radius:18px;backdrop-filter:blur(14px);box-shadow:0 7px 20px #173b5b0c}
+nav button{min-height:46px;padding:11px 17px;border-radius:13px}
+.pane:not(.hidden){gap:18px;align-items:start}
+.pane:not(.hidden)>.card{min-width:0}
+.card{box-shadow:var(--shadow);border-radius:22px}
+.card h2{display:flex;align-items:center;gap:8px}
+#home>.card:first-child{min-height:205px;display:flex;flex-direction:column;justify-content:center}
+.stat{min-height:88px;display:flex;flex-direction:column;justify-content:center}
+.itemtop{gap:14px}
+.itemtop>div:last-child{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.smallbtn{min-height:34px}
+.photo-card{transition:transform .18s,box-shadow .18s}
+.photo-card:hover{transform:translateY(-3px);box-shadow:0 12px 25px #173b5b20}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #72a9ce;outline-offset:2px}
+@media(min-width:900px){
+ .pane:not(.hidden){grid-template-columns:repeat(2,minmax(0,1fr))}
+ #home>.card:first-child{grid-column:1/-1}
+ #home>.card:nth-child(2),#home>.card:nth-child(3),#home>.card:nth-child(4){grid-column:span 1}
+ #trips>.card:first-child,#trips>#tripEditor,#trips>.card:last-child{grid-column:span 1}
+ #docs>.card:first-child,#docs>.card:last-child{grid-column:span 1}
+ #photos>.card{grid-column:1/-1}
+ #checklist>.card{grid-column:1/-1}
+ #deadlines>.card:first-child{grid-column:1/-1}
+}
+@media(max-width:700px){
+ header{min-height:172px;padding:25px 18px;border-radius:0 0 20px 20px}
+ main{padding:16px 13px 100px}
+ #cloudAuth{padding:17px}
+ nav{position:relative;top:auto;margin:12px 0;padding:9px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ nav button{min-width:0;white-space:normal;font-size:12px;line-height:1.2;padding:8px 5px;min-height:48px}
+ .pane:not(.hidden){display:block}
+ .pane:not(.hidden)>.card{margin-bottom:13px}
+ .card{padding:17px;border-radius:18px}
+ #home>.card:first-child{min-height:0;padding:20px}
+ #home>.card:first-child h2{font-size:22px}
+ #cloudAuth .row{grid-template-columns:1fr 1fr}
+ .itemtop>div:last-child{justify-content:flex-start}
+}
+@media(max-width:380px){nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 </head>
 <body>
