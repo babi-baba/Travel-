@@ -528,7 +528,7 @@ body:after{
 <button data-tab="photos"><span class="nav-icon">📸</span><span>Fotografie</span></button>
 <button data-tab="checklist"><span class="nav-icon">📋</span><span>Checklist</span></button>
 <button data-tab="deadlines"><span class="nav-icon">🗓️</span><span>Scadenze</span></button>
-<button data-tab="docs"><span class="nav-icon">🛏️</span><span>Hotel</span></button>
+<button data-tab="hotel"><span class="nav-icon">🛏️</span><span>Hotel</span></button>
 <button data-tab="trips"><span class="nav-icon">🗺️</span><span>Escursioni</span></button>
 <button data-tab="family" onclick="showTab('family')"><span class="nav-icon">👨‍👩‍👧</span><span>Famiglia</span></button>
 <button data-tab="settings"><span class="nav-icon">⚙️</span><span>Impostazioni</span></button>
@@ -737,7 +737,7 @@ function save(){localStorage.setItem(DB,JSON.stringify(data));renderAll()}
 function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function showTab(t){
  document.querySelectorAll('.pane').forEach(x=>x.classList.add('hidden'));
- const pane=document.getElementById(t);
+ const pane=document.getElementById(t==='hotel'?'docs':t);
  if(!pane){console.error('TRAVEL: sezione non trovata',t);return}
  pane.classList.remove('hidden');
  document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
