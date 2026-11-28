@@ -537,6 +537,7 @@ body:after{
 <button data-tab="docs"><span class="nav-icon">🛂</span><span>Documenti</span></button>
 <button data-tab="photos"><span class="nav-icon">📸</span><span>Fotografie</span></button>
 <button data-tab="currency"><span class="nav-icon">💱</span><span>Valute</span></button>
+<button data-tab="converters"><span class="nav-icon">📏</span><span>Taglie e temperature</span></button>
 <button data-tab="checklist"><span class="nav-icon">📋</span><span>Checklist</span></button>
 <button data-tab="deadlines"><span class="nav-icon">🗓️</span><span>Scadenze</span></button>
 <button data-tab="hotel"><span class="nav-icon">🛏️</span><span>Hotel</span></button>
@@ -629,6 +630,31 @@ body:after{
  </div>
  <p id="currencyStatus" class="muted" role="status" aria-live="polite">Caricamento delle valute disponibili…</p>
  <p class="muted" style="font-size:11px">Tassi di riferimento aggiornati nei giorni lavorativi. Non sono quotazioni in tempo reale né includono eventuali commissioni della banca o della carta.</p>
+</div>
+</section>
+<section id="converters" class="pane hidden">
+<div class="card">
+ <div class="section-heading"><span class="round-plane">👕</span><h2>Convertitore taglie abbigliamento</h2></div>
+ <p class="muted">Confronta le taglie europee con quelle statunitensi e britanniche. Le equivalenze sono indicative: controlla sempre la guida del marchio.</p>
+ <label for="sizeType">Categoria</label>
+ <select id="sizeType" onchange="renderSizeOptions()">
+  <option value="women">Abbigliamento donna</option><option value="men">Abbigliamento uomo</option>
+  <option value="womenShoes">Scarpe donna</option><option value="menShoes">Scarpe uomo</option>
+ </select>
+ <label for="sizeValue">La tua taglia</label><select id="sizeValue"></select>
+ <div id="sizeOutput" class="stat" style="margin-top:14px"><span class="muted">Equivalenze indicative</span><b id="sizeResult">Seleziona una taglia</b></div>
+</div>
+<div class="card">
+ <div class="section-heading"><span class="round-plane">🌡️</span><h2>Convertitore temperatura</h2></div>
+ <p class="muted">Utile per leggere le previsioni meteo negli Stati Uniti: °C e °F.</p>
+ <label for="tempValue">Temperatura</label><input id="tempValue" type="number" step="any" inputmode="decimal" value="20" placeholder="Inserisci la temperatura">
+ <div class="row">
+  <div><label for="tempFrom">Da</label><select id="tempFrom"><option value="C">Celsius (°C)</option><option value="F">Fahrenheit (°F)</option></select></div>
+  <button class="secondary fit" type="button" onclick="swapTemperature()" style="align-self:end;min-width:48px">⇄</button>
+  <div><label for="tempTo">A</label><select id="tempTo"><option value="F">Fahrenheit (°F)</option><option value="C">Celsius (°C)</option></select></div>
+ </div>
+ <button class="primary" style="width:100%;margin-top:15px" type="button" onclick="convertTemperature()">Converti temperatura</button>
+ <div class="stat" style="margin-top:15px"><span class="muted">Risultato</span><b id="tempOutput">68 °F</b></div>
 </div>
 </section>
 <section id="settings" class="pane hidden">
@@ -861,6 +887,31 @@ async function convertCurrency(){
  }catch(error){status.textContent='Non riesco a recuperare il cambio. Controlla la connessione e riprova.';rateText.textContent=error.message;console.error('TRAVEL convertCurrency:',error)}
 }
 function swapCurrencies(){const from=document.getElementById('currencyFrom'),to=document.getElementById('currencyTo');const old=from.value;from.value=to.value;to.value=old;convertCurrency()}
+const sizeTables={
+ women:[['EU 32','US 0','UK 4'],['EU 34','US 2','UK 6'],['EU 36','US 4','UK 8'],['EU 38','US 6','UK 10'],['EU 40','US 8','UK 12'],['EU 42','US 10','UK 14'],['EU 44','US 12','UK 16'],['EU 46','US 14','UK 18'],['EU 48','US 16','UK 20']],
+ men:[['EU 44','US 34','UK 34'],['EU 46','US 36','UK 36'],['EU 48','US 38','UK 38'],['EU 50','US 40','UK 40'],['EU 52','US 42','UK 42'],['EU 54','US 44','UK 44'],['EU 56','US 46','UK 46'],['EU 58','US 48','UK 48']],
+ womenShoes:[['EU 35','US 5','UK 2.5'],['EU 36','US 6','UK 3.5'],['EU 37','US 6.5','UK 4'],['EU 38','US 7.5','UK 5'],['EU 39','US 8.5','UK 6'],['EU 40','US 9','UK 6.5'],['EU 41','US 10','UK 7.5'],['EU 42','US 11','UK 8']],
+ menShoes:[['EU 39','US 6.5','UK 6'],['EU 40','US 7','UK 6.5'],['EU 41','US 8','UK 7'],['EU 42','US 8.5','UK 7.5'],['EU 43','US 9.5','UK 8.5'],['EU 44','US 10','UK 9'],['EU 45','US 11','UK 10'],['EU 46','US 12','UK 11'],['EU 47','US 13','UK 12']]
+};
+function renderSizeOptions(){
+ const type=document.getElementById('sizeType').value,select=document.getElementById('sizeValue');
+ select.innerHTML=sizeTables[type].map((row,i)=>'<option value="'+i+'">'+row[0]+'</option>').join('');
+ showSizeResult();
+}
+function showSizeResult(){
+ const type=document.getElementById('sizeType').value,row=sizeTables[type][Number(document.getElementById('sizeValue').value)];
+ document.getElementById('sizeResult').textContent=row?row.join('  ·  '):'Taglia non disponibile';
+}
+function convertTemperature(){
+ const value=Number(document.getElementById('tempValue').value),from=document.getElementById('tempFrom').value,to=document.getElementById('tempTo').value;
+ if(document.getElementById('tempValue').value.trim()===''||!Number.isFinite(value)){document.getElementById('tempOutput').textContent='Inserisci una temperatura valida';return}
+ const converted=from===to?value:from==='C'?(value*9/5)+32:(value-32)*5/9;
+ document.getElementById('tempOutput').textContent=new Intl.NumberFormat('it-IT',{maximumFractionDigits:1}).format(converted)+' °'+to;
+}
+function swapTemperature(){
+ const from=document.getElementById('tempFrom'),to=document.getElementById('tempTo'),old=from.value;
+ from.value=to.value;to.value=old;convertTemperature();
+}
 function renderAll(){renderHome();renderTrips();renderPeople();renderSelects();renderDocs();renderPhotos();renderDeadlines();renderChecklistSelects();renderChecklist()}
 function renderHome(){document.getElementById('tripCount').textContent=data.trips.length;document.getElementById('docCount').textContent=data.docs.length;document.getElementById('deadlineCount').textContent=data.deadlines.filter(d=>!d.done&&d.date>=new Date().toISOString().slice(0,10)).length;document.getElementById('peopleCount').textContent=data.people.length;let f=document.getElementById('featured');let today=new Date().toISOString().slice(0,10);let t=[...data.trips].filter(x=>!x.end||x.end>=today).sort((a,b)=>(a.start||'').localeCompare(b.start||''))[0]||[...data.trips].sort((a,b)=>(b.start||'').localeCompare(a.start||''))[0];f.innerHTML=t?'<div class="next-trip-layout"><div class="next-trip-art"><span class="art-label">IL TUO PROSSIMO VIAGGIO</span><strong>'+esc(t.destination||t.name)+'</strong><span class="art-plane">✈</span></div><div class="next-trip-info"><h3>'+esc(t.destination||t.name)+'</h3><p>▦ &nbsp;'+fmt(t.start)+' – '+fmt(t.end)+'</p><p>♙ &nbsp;'+data.people.length+' viaggiatori</p><button class="secondary" onclick="showTab(\'trips\')">Apri viaggio&nbsp; ›</button></div></div>':'<div class="empty">Nessun viaggio ancora. Crea il tuo primo viaggio.</div>';let ds=data.deadlines.filter(d=>!d.done).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);document.getElementById('upcoming').innerHTML=ds.length?ds.map(d=>`<div class="item"><b>${esc(d.title)}</b><div class="muted">${fmt(d.date)} · ${esc(tripName(d.tripId))}</div></div>`).join(''):'<p class="muted">Nessuna scadenza registrata.</p>'}
 function renderTrips(){document.getElementById('tripList').innerHTML=data.trips.length?data.trips.map(t=>`<div class="item"><div class="itemtop"><div><div class="itemtitle">${esc(t.name)}</div><div class="muted">${esc(t.destination||'')} · ${fmt(t.start)} – ${fmt(t.end)}</div></div><div><button class="smallbtn" onclick="editTrip('${t.id}')">Modifica</button> <button class="smallbtn" onclick="deleteTrip('${t.id}')">Elimina</button></div></div></div>`).join(''):'<div class="empty">Non hai ancora creato viaggi.</div>'}
@@ -914,6 +965,12 @@ async function syncCloud(manual){if(!cloudUser||cloudBusy)return;cloudBusy=true;
 supabaseClient.auth.onAuthStateChange(async(event,session)=>{if(event==='SIGNED_OUT'){cloudUser=null;updateCloudUI('Sei uscita. I dati locali restano su questo dispositivo.')}});
 if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 initCurrencyConverter();
+renderSizeOptions();
+convertTemperature();
+document.getElementById("sizeValue").addEventListener("change",showSizeResult);
+document.getElementById("tempValue").addEventListener("input",convertTemperature);
+document.getElementById("tempFrom").addEventListener("change",convertTemperature);
+document.getElementById("tempTo").addEventListener("change",convertTemperature);
 openFileDb().then(async()=>{load();let {data:sessionData}=await supabaseClient.auth.getSession();if(sessionData.session){cloudUser=sessionData.session.user;await afterLogin()}else await updateCloudUI('Non collegata. Accedi per sincronizzare viaggi e documenti tra i tuoi dispositivi.');checkReminders();setInterval(checkReminders,60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()})}).catch(()=>{load();updateCloudUI('Archivio locale pronto. Accedi per attivare il cloud.');checkReminders();setInterval(checkReminders,60000)});
 </script>
 </body></html>
