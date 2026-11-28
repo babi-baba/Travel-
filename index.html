@@ -639,7 +639,9 @@ body:after{
  <label for="sizeType">Categoria</label>
  <select id="sizeType" onchange="renderSizeOptions()">
   <option value="women">Abbigliamento donna</option><option value="men">Abbigliamento uomo</option>
+  <option value="kidsClothes">Abbigliamento bambino/a</option>
   <option value="womenShoes">Scarpe donna</option><option value="menShoes">Scarpe uomo</option>
+  <option value="kidsShoes">Scarpe bambino/a</option>
  </select>
  <label for="sizeValue">La tua taglia</label><select id="sizeValue"></select>
  <div id="sizeOutput" class="stat" style="margin-top:14px"><span class="muted">Equivalenze indicative</span><b id="sizeResult">Seleziona una taglia</b></div>
@@ -891,7 +893,9 @@ const sizeTables={
  women:[['EU 32','US 0','UK 4'],['EU 34','US 2','UK 6'],['EU 36','US 4','UK 8'],['EU 38','US 6','UK 10'],['EU 40','US 8','UK 12'],['EU 42','US 10','UK 14'],['EU 44','US 12','UK 16'],['EU 46','US 14','UK 18'],['EU 48','US 16','UK 20']],
  men:[['EU 44','US 34','UK 34'],['EU 46','US 36','UK 36'],['EU 48','US 38','UK 38'],['EU 50','US 40','UK 40'],['EU 52','US 42','UK 42'],['EU 54','US 44','UK 44'],['EU 56','US 46','UK 46'],['EU 58','US 48','UK 48']],
  womenShoes:[['EU 35','US 5','UK 2.5'],['EU 36','US 6','UK 3.5'],['EU 37','US 6.5','UK 4'],['EU 38','US 7.5','UK 5'],['EU 39','US 8.5','UK 6'],['EU 40','US 9','UK 6.5'],['EU 41','US 10','UK 7.5'],['EU 42','US 11','UK 8']],
- menShoes:[['EU 39','US 6.5','UK 6'],['EU 40','US 7','UK 6.5'],['EU 41','US 8','UK 7'],['EU 42','US 8.5','UK 7.5'],['EU 43','US 9.5','UK 8.5'],['EU 44','US 10','UK 9'],['EU 45','US 11','UK 10'],['EU 46','US 12','UK 11'],['EU 47','US 13','UK 12']]
+ menShoes:[['EU 39','US 6.5','UK 6'],['EU 40','US 7','UK 6.5'],['EU 41','US 8','UK 7'],['EU 42','US 8.5','UK 7.5'],['EU 43','US 9.5','UK 8.5'],['EU 44','US 10','UK 9'],['EU 45','US 11','UK 10'],['EU 46','US 12','UK 11'],['EU 47','US 13','UK 12']],
+ kidsClothes:[['EU 92 · 2 anni','US 2T','UK 2–3 anni'],['EU 98 · 3 anni','US 3T','UK 3–4 anni'],['EU 104 · 4 anni','US 4T','UK 4–5 anni'],['EU 110 · 5 anni','US 5T','UK 5–6 anni'],['EU 116 · 6 anni','US 6','UK 6–7 anni'],['EU 122 · 7 anni','US 7','UK 7–8 anni'],['EU 128 · 8 anni','US 8','UK 8–9 anni'],['EU 134 · 9 anni','US 9','UK 9–10 anni'],['EU 140 · 10 anni','US 10','UK 10–11 anni'],['EU 146 · 11 anni','US 11','UK 11–12 anni'],['EU 152 · 12 anni','US 12','UK 12–13 anni'],['EU 158 · 13 anni','US 13','UK 13–14 anni'],['EU 164 · 14 anni','US 14','UK 14–15 anni']],
+ kidsShoes:[['EU 22','US 6C','UK 5.5'],['EU 23','US 7C','UK 6.5'],['EU 24','US 8C','UK 7.5'],['EU 25','US 9C','UK 8.5'],['EU 26','US 9.5C','UK 9'],['EU 27','US 10C','UK 9.5'],['EU 28','US 11C','UK 10.5'],['EU 29','US 12C','UK 11.5'],['EU 30','US 12.5C','UK 12'],['EU 31','US 13C','UK 12.5'],['EU 32','US 1Y','UK 13.5'],['EU 33','US 2Y','UK 1'],['EU 34','US 3Y','UK 2'],['EU 35','US 3.5Y','UK 2.5'],['EU 36','US 4Y','UK 3'],['EU 37','US 5Y','UK 4'],['EU 38','US 6Y','UK 5']]
 };
 function renderSizeOptions(){
  const type=document.getElementById('sizeType').value,select=document.getElementById('sizeValue');
